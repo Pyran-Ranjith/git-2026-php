@@ -1,0 +1,183 @@
+<?php
+//database connection
+$server = "localhost";
+$user = "root";
+$password = "";
+$database = "ngoding_pintar_dbcrud2026";
+
+//for connection
+$conn = mysqli_connect($server, $user, $password, $database) or die(mysqli_error($conn));
+?>
+
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>#4 index.php</title>
+
+  <!-- Bootstrap 5 CSS-->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
+</head>
+
+<body>
+  <!-- //Begin container -->
+  <div class="container">
+    <h3 class="text-center">Data Invenries</h3>
+    <h3 class="text-center">Kantor Ngodingpintar</h3>
+
+    <!-- //Begin row -->
+    <div class="row">
+      <!-- //Begin col -->
+      <!-- <div class="col-md-6 mx-auto"> -->
+      <!-- col-md-6: This class is used to define a column that takes up 6 out of 12 available grid columns on medium-sized screens (≥768px). It means that the column will occupy half of the available width on medium and larger screens. -->
+      <div class="col-md-8 mx-auto">
+        <!-- col-md-8: This class is used to define a column that takes up 8 out of 12 available grid columns on medium-sized screens (≥768px). It means that the column will occupy two-thirds of the available width on medium and larger screens. -->
+        <!-- mx-auto: This class is used to center the column horizontally within its parent container. It applies automatic left and right margins to the column, effectively centering it on the page. In this case, the column will take up 6 out of 12 available grid columns (50% width) and will be centered in the middle of the row. -->
+
+        <div class="card">
+          <h5 class="card-header bg-info text-light">Form Data Input</h5>
+
+          <!-- //Begin card-body -->
+          <div class="card-body">
+            <form method="post">
+              <div class="mb-3">
+                <label class="form-label">Item Code</label>
+                <input type="text" name="itemcode" class="form-control" id="exampleFormControlInput1"
+                  placeholder="Enter Item Code" />
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label">Item Name</label>
+                <input type="text" name="itemname" class="form-control" id="exampleFormControlInput1"
+                  placeholder="Enter Item Name" />
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label">Origin of Goods</label>
+                <select class="form-select" name="originofgoods">
+                  <option>Open this select menu</option>
+                  <option>--Select--</option>
+                  <option value="Purchase">Purchase</option>
+                  <option value="Grant">Grant</option>
+                  <option value="Help">Help</option>
+                  <option value="Donation">Donation</option>
+                </select>
+              </div>
+
+              <div class="row">
+                <div class="col">
+                  <div class="mb-3">
+                    <label class="form-label">Quantity</label>
+                    <input type="number" name="number" class="form-control" id="exampleFormControlInput1"
+                      placeholder="Enter Item Quantity" />
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="mb-3">
+                    <label class="form-label">Unit</label>
+                    <select class="form-select" name="unit">
+                      <option>Open this select menu</option>
+                      <option>--Select--</option>
+                      <option value="Unit">Unit</option>
+                      <option value="Box">Box</option>
+                      <option value="Pcs">Pcs</option>
+                      <option value="Pack">Pack</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="col">
+                  <div class="mb-3">
+                    <label class="form-label">Recieve Date</label>
+                    <input type="date" name="date" class="form-control" /* id="exampleFormControlInput1" */
+                      placeholder="Enter Date" />
+                  </div>
+                </div>
+
+                <div class="text-center">
+                  <hr>
+                  <button class="btn btn-primary" name="save" type="submit">Save</button>
+                  <button class="btn btn-danger" name="reset" type="submit">Reset</button>
+                </div>
+
+              </div>
+            </form>
+          </div>
+          <!-- //End card-body -->
+
+          <div class="card-footer bg-info text-light"></div>
+        </div>
+
+        <div class="card mt-4">
+          <h5 class="card-header bg-info text-light">Item Data</h5>
+          <div class="card-body">
+            <div class="col-md-6 mx-auto">
+              <form method="POST">
+                <div class="input-group mb-3">
+                  <input type="text" name="search" class="form-control" placeholder="Enter keywords" />
+                  <button class="btn btn-primary" name="bsearch" type="submit">Search</button>
+                  <button class="btn btn-danger" name="breset" type="submit">Reset</button>
+                </div>
+              </form>
+            </div>
+
+            <table class="table table-striped table-bordered">
+              <tr>
+                <th>No.</th>
+                <th>Item Code</th>
+                <th>Name of goods</th>
+                <th>Country of Origin</th>
+                <th>Origin of Goods</th>
+                <!-- <th>Amount</th> -->
+                <th>Date received</th>
+                <th>Action</th>
+              </tr>
+
+              <?php
+              ?>
+
+              <?php
+              // Displaying data from the database
+              $no = 1;
+              $query = mysqli_query($conn, "SELECT * FROM tgoods order by id_goods  asc");
+              while ($data = mysqli_fetch_array($query)) :
+                echo $data['code'];
+              ?>
+
+              </tr>
+              <td><?= $no++; ?></td>
+              <td><?= $data['code']; ?></td>
+              <td><?= $data['name']; ?></td>
+              <td><?= $data['origin']; ?></td>
+              <td><?= $data['amount']; ?></td>
+              <!-- <td><?= $data['unit']; ?></td> -->
+              <td><?= $data['date_received']; ?></td>
+              <td>
+                <a href="#" class="btn btn-warning">Edit</a>
+                <a href="#" class="btn btn-danger">Delete</a>
+              </td>
+              </tr>
+              <?php endwhile; ?>
+
+            </table>
+          </div>
+
+          <div class="card-footer bg-info text-light"></div>
+        </div>
+      </div>
+      <!-- //End col -->
+    </div>
+    <!-- //End row -->
+  </div>
+  <!-- //End container -->
+
+  <!-- Bootstrap 5 JS-->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
+  </script>
+</body>
+
+</html>
