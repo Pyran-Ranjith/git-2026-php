@@ -1,6 +1,6 @@
 <?php
-require_once "db_conn.php";
-include_once "header.php";
+require_once "../header.php"; //To load base_path_root
+
 global $conn;
 global  $error_no;
 global  $error_msg;
@@ -17,12 +17,12 @@ $id = $_GET["id"] ?? "";
 
 // Validate ID
 if (empty($id) || !is_numeric($id)) {
-  header("Location: " . BASE_URL . "/index-work.php?msg_type=Error&msg=Invalid ID provided");
+  header("Location:  " . $base_url_root . "/index-work.php?msg_type=Error&msg=Invalid ID provided");
   exit();
 }
 
 // Query the database
-$sql = "SELECT * FROM `crudd` WHERE id = $id LIMIT 1";
+$sql = "SELECT * FROM `crud` WHERE id = $id LIMIT 1";
 $result = mysqli_query($conn, $sql);
 
 // Check if query was successful
@@ -38,7 +38,8 @@ if ($result && mysqli_num_rows($result) > 0) {
 
   // Redirect with error message
   $msg = "Record cannot be viewed. Error: " . $error_msg;
-  header("Location: " . BASE_URL . "/index-work.php?msg_type=Error&msg=" . urlencode($msg));
+  header("Location: " . $base_url_root . "/index-work.php?msg_type=Error&msg=" . urlencode($msg));
+
   exit();
 }
 ?>
@@ -89,8 +90,8 @@ if ($result && mysqli_num_rows($result) > 0) {
           </div>
         </div>
 
-        <div>
-          <a href="<?= BASE_URL ?>/index-work.php" class="btn btn-primary">Back</a>
+        <div> 
+          <a href="<?= $base_url_root ?>/index-work.php" class="btn btn-primary">Back</a>
         </div>
       </form>
     </div>

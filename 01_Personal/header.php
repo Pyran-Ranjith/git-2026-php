@@ -23,7 +23,7 @@ global $conn;
       <nav class="navbar navbar-expand-lg navbar-dark bg-primary rounded-3 shadow">
         <div class="container-fluid">
           <a class="navbar-brand" href="<?= $base_url_root ?>/index-work.php">
-            <i class="fas fa-database"></i> PHP Complete CRUD Application
+            <i class="fas fa-database"></i> Ranjith's Personal Management System
           </a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">

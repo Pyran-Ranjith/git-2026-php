@@ -31,8 +31,8 @@ if (!$conn) {
 return $conn;
 }
 
-$base_url_root = "http://localhost/git-2026-php/A-Ra-Smart-Tech/PHP-CRUD-MySQL-Bootstrap5";
-$base_path_root = "C:\\xampp\htdocs\git-2026-php\A-Ra-Smart-Tech\PHP-CRUD-MySQL-Bootstrap5"; // Use file system path, NOT URL foo require_once
+$base_url_root = "http://localhost/git-2026-php/01_Personal";
+$base_path_root = "C:\\xampp\htdocs\git-2026-php\01_Personal"; // Use file system path, NOT URL foo require_once
 // echo "<br><br>";
 // echo "Sbase_url_root = " . $base_url_root . "";
 // echo "<br>";

@@ -1,6 +1,5 @@
 <?php
-require_once "db_conn.php";
-include_once "header.php";
+require_once "../header.php"; //To load base_path_root
 global $conn;
 global  $error_no;
 global  $error_msg;
@@ -25,7 +24,8 @@ if (isset($_POST["submit"])) {
   $result = mysqli_query($conn, $sql);
 
   if ($result) {
-        header("Location: index-work.php?msg_type=Update&msg=Record updated successfully for " . urlencode($first_name) . " " . urlencode($last_name));
+  $msg = "Record updated successfully for ";
+  header("Location: " . $base_url_root . "/index-work.php?msg_type=Update&msg=" . $msg . urlencode($first_name) . " " . urlencode($last_name));
   } else {
     echo "Failed: " . mysqli_error($conn);
     if (!mysqli_query($conn, $sql)) {
@@ -33,7 +33,8 @@ if (isset($_POST["submit"])) {
       $error_msg = mysqli_error($conn);
       $err = true;
     }
-    header("Location: index-work.php?msg_type=Error&msg=Record not updated, Error occured updating for " . urlencode($error_msg));
+  $msg = "Record not be updated,. Error: " . $error_msg;
+  header("Location: " . $base_url_root . "/index-work.php?msg_type=Error&msg=" . urlencode($msg));
   }
 }
 ?>
@@ -87,8 +88,6 @@ if (isset($_POST["submit"])) {
         </div>
 
         <div class="form-check">
-          <!-- <input class="form-check-input" type="radio" name="gender" id="female" />
-          <label class="form-check-label" for="female"> Female </label> -->
           <input class="form-check-input" type="radio" name="gender" id="female" value="female"
             <?php echo ($row["gender"] == 'female') ? "checked" : ""; ?>>
           <label class="form-check-label" for="female"> Female </label>
@@ -100,7 +99,7 @@ if (isset($_POST["submit"])) {
         <button type="submit" class="btn btn-success" name="submit">
           Update
         </button>
-        <a href="<?= BASE_URL ?>/index-work.php" class="btn btn-danger">Cancel</a>
+          <a href="<?= $base_url_root ?>/index-work.php" class="btn btn-primary">Cancel</a>
       </div>
     </form>
   </div>

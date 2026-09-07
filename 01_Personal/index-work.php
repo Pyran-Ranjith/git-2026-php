@@ -2,7 +2,7 @@
 require_once "header.php";
 global $conn;
 ?>
-<title>INDEX-WORK.php</title>
+<title>Ranjith Personal</title>
 </head>
 
 <body>

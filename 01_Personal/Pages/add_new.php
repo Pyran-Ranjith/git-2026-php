@@ -1,5 +1,5 @@
 <?php
-require_once "db_conn.php";
+require_once "../header.php"; //To load base_path_root
 global $conn;
 global  $error_no;
 global  $error_msg;
@@ -18,23 +18,23 @@ if (isset($_POST["submit"])) {
   $email = $_POST['email'];
   $gender = $_POST['gender'];
 
-  $sql = "INSERT INTO `crud`(`id`, `first_name`, `last_name`, `email`, `gender`) VALUES (NULL,'$first_name','$last_name','$email','$gender')";
+  $sql = "INSERT INTO `crudd`(`id`, `first_name`, `last_name`, `email`, `gender`) VALUES (NULL,'$first_name','$last_name','$email','$gender')";
 
   $result = mysqli_query($conn, $sql);
 
   if ($result) {
-    header("Location: index-work.php?msg=New record created successfully for " . urlencode($first_name) . " " . urlencode($last_name));
+    $msg = "New record created successfully for ";
+    header("Location: " . $base_url_root . "/index-work.php?msg_type=Add&msg=" . $msg . urlencode($first_name) . " " . urlencode($last_name));
   } else {
-    // echo "Failed: " . mysqli_error($conn);
     if (!mysqli_query($conn, $sql)) {
       $error_no = mysqli_errno($conn);
       $error_msg = mysqli_error($conn);
       $err = true;
     }
-    header("Location: index-work.php?msg=Error occured: " . urlencode($error_msg));
+    $msg = "Record not be added,. Error: " . $error_msg;
+    header("Location: " . $base_url_root . "/index-work.php?msg_type=Error&msg=" . urlencode($msg));
   }
 }
-include_once "header.php";
 ?>
 
 <title>add_new.php</title>
@@ -43,13 +43,13 @@ include_once "header.php";
 <body>
 
   <?php if ($err) { ?>
-  <div class="alert alert-danger alert-dismissible fade show" role="alert">
-    <h4 class="alert-heading"><i class="fas fa-exclamation-circle"></i> Database Error</h4>
-    <hr>
-    <p><strong>Error Number:</strong> <code><?= $error_no ?></code></p>
-    <p><strong>Error Description:</strong> <?= htmlspecialchars($error_msg) ?></p>
-    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-  </div>
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+      <h4 class="alert-heading"><i class="fas fa-exclamation-circle"></i> Database Error</h4>
+      <hr>
+      <p><strong>Error Number:</strong> <code><?= $error_no ?></code></p>
+      <p><strong>Error Description:</strong> <?= htmlspecialchars($error_msg) ?></p>
+      <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
   <?php } ?>
 
 
@@ -62,7 +62,7 @@ include_once "header.php";
   </div>
 
   <div class="contaner d-flex justify-content-center">
-    <form action="add_new.php" method="post" style="width: 50vw; min-width: 300px">
+    <form action="" method="post" style="width: 50vw; min-width: 300px">
       <div class="row mb-3">
         <div class="col">
           <label class="form-label">First Name:</label>
@@ -97,7 +97,7 @@ include_once "header.php";
         <button type="submit" class="btn btn-success" name="submit">
           Save
         </button>
-        <a href="<?= BASE_URL ?>/index-work.php" class="btn btn-danger">Cancel</a>
+        <a href="<?= $base_url_root ?>/index-work.php" class="btn btn-primary">Cancel</a>
       </div>
     </form>
   </div>
