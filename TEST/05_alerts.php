@@ -18,21 +18,21 @@
       <h4>Corrected code:</h4>
     </div>
     <?php if ($msg_type == "Update" && $msg) { ?>
-    <div class="container mt-3">
-      <div class="alert alert-success alert-dismissible fade show" role="alert">
-        <i class="fas fa-check-circle"></i> <?= htmlspecialchars($msg) ?>
-        <a href="#" class="alert-link">Refresh</a>
-        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+      <div class="container mt-3">
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+          <i class="fas fa-check-circle"></i> <?= htmlspecialchars($msg) ?>
+          <a href="#" class="alert-link">Refresh</a>
+          <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
       </div>
-    </div>
     <?php } elseif ($msg_type == "Error" && $msg) { ?>
-    <div class="container mt-3">
-      <div class="alert alert-danger alert-dismissible fade show" role="alert">
-        <i class="fas fa-exclamation-circle"></i> <?= htmlspecialchars($msg) ?>
-        <a href="#" class="alert-link">Refresh</a>
-        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+      <div class="container mt-3">
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+          <i class="fas fa-exclamation-circle"></i> <?= htmlspecialchars($msg) ?>
+          <a href="#" class="alert-link">Refresh</a>
+          <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
       </div>
-    </div>
     <?php } ?>
   </section>>
 
@@ -45,13 +45,13 @@
     if ($msg && in_array($msg_type, ['Update', 'Error'])) {
       $alert_class = ($msg_type == 'Update') ? 'success' : 'danger';
     ?>
-    <div class="container mt-3">
-      <div class="alert alert-<?= $alert_class ?> alert-dismissible fade show" role="alert">
-        <?= htmlspecialchars($msg) ?>
-        <a href="index-work.php" class="alert-link">Refresh</a>
-        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+      <div class="container mt-3">
+        <div class="alert alert-<?= $alert_class ?> alert-dismissible fade show" role="alert">
+          <?= htmlspecialchars($msg) ?>
+          <a href="index-work.php" class="alert-link">Refresh</a>
+          <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
       </div>
-    </div>
     <?php } ?>
   </section>>
 
@@ -94,14 +94,64 @@
     <?php if ($msg) {
       $alert_type = ($msg_type == 'Update') ? 'success' : (($msg_type == 'Error') ? 'danger' : 'info');
     ?>
-    <div class="container mt-3">
-      <div class="alert alert-<?= $alert_type ?> alert-dismissible fade show" role="alert">
-        <?= htmlspecialchars($msg) ?>
-        <a href="index-work.php" class="alert-link">Refresh</a>
-        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+      <div class="container mt-3">
+        <div class="alert alert-<?= $alert_type ?> alert-dismissible fade show" role="alert">
+          <?= htmlspecialchars($msg) ?>
+          <a href="index-work.php" class="alert-link">Refresh</a>
+          <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
       </div>
-    </div>
     <?php } ?>
+  </section>>
+
+  <!--  -->
+  <section>>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="<?= BASE_URL ?>/index.php">CRUD App</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+          <ul class="navbar-nav me-auto">
+            <li class="nav-item">
+              <a class="nav-link active" href="<?= BASE_URL ?>/index.php">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="<?= BASE_URL ?>/about.php">About</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
+                Users
+              </a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="<?= BASE_URL ?>/users/index.php">View Users</a></li>
+                <li><a class="dropdown-item" href="<?= BASE_URL ?>/users/add.php">Add User</a></li>
+                <li>
+                  <hr class="dropdown-divider">
+                </li>
+                <li><a class="dropdown-item" href="<?= BASE_URL ?>/users/archived.php">Archived</a></li>
+              </ul>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownProducts" role="button" data-bs-toggle="dropdown">
+                Products
+              </a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="<?= BASE_URL ?>/products/index.php">All Products</a></li>
+                <li><a class="dropdown-item" href="<?= BASE_URL ?>/products/add.php">Add Product</a></li>
+                <li><a class="dropdown-item" href="<?= BASE_URL ?>/products/categories.php">Categories</a></li>
+              </ul>
+            </li>
+          </ul>
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" href="<?= BASE_URL ?>/logout.php">Logout</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
   </section>>
 
   <!-- -------------------------------------------------------------- -->

@@ -1,7 +1,7 @@
   <?php
   // Include config first
-  require_once __DIR__ . '/config.php';
   global $conn;
+  require_once __DIR__ . '/config.php';
 
   ?>
   <!doctype html>
@@ -20,10 +20,10 @@
       crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <div class="container mt-3">
-      <nav class="navbar navbar-expand-lg navbar-dark bg-primary rounded-3 shadow">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-success rounded-3 shadow">
         <div class="container-fluid">
-          <a class="navbar-brand" href="<?= $base_url_root ?>/index-work.php">
-            <i class="fas fa-database"></i> PHP Complete CRUD Application
+          <a class="navbar-brand" href="<?= $base_url_root ?>/dashboard.php">
+            <i class="fas fa-database"></i> Ranjith's Personal
           </a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -32,56 +32,27 @@
           <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="<?= $base_url_root ?>/dashboard.php">
-                  <i class="fas fa-home"></i> Dashboard
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" aria-current="page" href="<?= $base_url_root ?>/index-work.php">
+                <a class="nav-link" aria-current="page" href="<?= $base_url_root ?>/dashboard.php">
                   <i class="fas fa-home"></i> Home
                 </a>
               </li>
 
               <li class="nav-item dropdown">
-                <a
-                  class="nav-link dropdown-toggle"
-                  href="#"
-                  id="navbarDropdown"
-                  role="button"
-                  data-bs-toggle="dropdown"
-                >
-                  Users
-                </a>
+                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Jump to</a>
                 <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="#diary">Diary</a></li>
+                  <li><a class="dropdown-item" href="#crud">PHP Complete CRUD Application</a></li>
+                  <!-- <li><a class="dropdown-item" href="#">Another action</a></li>
+                  <li><a class="dropdown-item" href="#">Something else here</a></li>
                   <li>
-                    <a
-                      class="dropdown-item"
-                      href="<?= BASE_URL ?>/users/index.php"
-                      >View Users</a
-                    >
+                    <hr class="dropdown-divider">
                   </li>
-                  <li>
-                    <a
-                      class="dropdown-item"
-                      href="<?= BASE_URL ?>/users/add.php"
-                      >Add User</a
-                    >
-                  </li>
-                  <li><hr class="dropdown-divider" /></li>
-                  <li>
-                    <a
-                      class="dropdown-item"
-                      href="<?= BASE_URL ?>/users/archived.php"
-                      >Archived</a
-                    >
-                  </li>
+                  <li><a class="dropdown-item" href="#">Separated link</a></li> -->
                 </ul>
               </li>
 
-
-<!-- <noscript> -->
               <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Dropdown</a>
+                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Manage</a>
                 <ul class="dropdown-menu">
                   <li><a class="dropdown-item" href="<?= $base_url_root ?>/diary/index.php">Diary</a></li>
                   <li><a class="dropdown-item" href="<?= $base_url_root ?>/index-work.php">PHP Complete CRUD Application</a></li>
@@ -93,7 +64,7 @@
                   <li><a class="dropdown-item" href="#">Separated link</a></li> -->
                 </ul>
               </li>
-<!-- </noscript> -->
+
             </ul>
           </div>
         </div>

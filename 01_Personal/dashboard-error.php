@@ -1,11 +1,12 @@
 <?php
+require_once "header-dashboard.php";
 global $conn;
-require_once "header.php";
 ?>
-<title>INDEX-WORK.php</title>
+<title>Dashboard</title>
 </head>
 
 <body>
+  <noscript>
   <?php
   $msg_type = ($_GET["msg_type"] ?? "");
   $msg = ($_GET["msg"] ?? "");
@@ -113,7 +114,7 @@ require_once "header.php";
       });
     });
   </script>
-
+</noscript>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
