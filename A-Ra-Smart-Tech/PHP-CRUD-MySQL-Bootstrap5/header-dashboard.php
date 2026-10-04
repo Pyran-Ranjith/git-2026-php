@@ -40,8 +40,9 @@
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Jump to</a>
                 <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="#diary">Diary</a></li>
-                  <li><a class="dropdown-item" href="#crud">PHP Complete CRUD Application</a></li>
+                  <li><a class="dropdown-item" href="#diary_cards">Diary Cards</a></li>
+                  <li><a class="dropdown-item" href="#diary_with_search">Diary with Search</a></li>
+                  <!-- <li><a class="dropdown-item" href="#crud">PHP Complete CRUD Application</a></li> -->
                   <!-- <li><a class="dropdown-item" href="#">Another action</a></li>
                   <li><a class="dropdown-item" href="#">Something else here</a></li>
                   <li>

@@ -1,5 +1,5 @@
-# Create a Website with Bootstrap 5 from Scratch | Fast 
-All course files for the tutorial series on @Emprinnos
+# 
+All course files for the tutorial series on 
 
 ## #0 Important Note
 

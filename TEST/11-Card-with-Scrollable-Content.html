@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en" data-bs-theme="light">
+  <head>
+    <title>Test/11-Card-Scroll</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Bootstrap CSS v5.3.8 -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+      crossorigin="anonymous"
+    />
+  </head>
+
+  <body>
+  <div class="container mt-3">
+    <h1>Card with Scrollable Content</h1>
+
+    <h2>Method 1: Scrollable Card Body (Recommended)</h2>
+<div class="card" style="width: 18rem;">
+    <div class="card-header">Card Header</div>
+    <div class="card-body" style="max-height: 200px; overflow-y: auto;">
+        <p>Line 1</p>
+        <p>Line 2</p>
+        <p>Line 3</p>
+        <p>Line 4</p>
+        <p>Line 5</p>
+        <p>Line 6</p>
+        <p>Line 7</p>
+        <p>Line 8</p>
+        <p>Line 9</p>
+        <p>Line 10</p>
+    </div>
+    <div class="card-footer">Card Footer</div>
+</div>
+
+<h2>Method 2: Using Bootstrap Utility Classes Only</h2>
+<div class="card">
+    <div class="card-header">Card Header</div>
+    <div class="card-body overflow-auto" style="height: 200px;">
+        <p>Content 1</p>
+        <p>Content 2</p>
+        <p>Content 3</p>
+        <!-- More content... -->
+    </div>
+    <div class="card-footer">Card Footer</div>
+</div>
+
+
+<!-- ------------------------------------------------------------ -->
+</div>
+
+
+    <!-- Bootstrap JavaScript Bundle (includes Popper) -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
