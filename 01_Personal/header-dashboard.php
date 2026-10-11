@@ -114,7 +114,10 @@
                   <!-- <li><a class="dropdown-item diary-green" href="<?= $base_url_diary ?>/dashboard.php">Diary</a></li> -->
 
                   <!-- <li><a class="dropdown-item diary-green" href="<?= $base_url_diary ?>/dashboard.php">Diary</a></li> -->
+                  <li><a class="dropdown-item diary-green" href="<?= $base_url_02_personal ?>/index.php">02_Personal</a></li>
                   <li><a class="dropdown-item diary-green" href="<?= $base_url_diary ?>/dashboard.php">Diary</a></li>
+                  <li><a class="dropdown-item diary-green" href="<?= $base_url_users_antigravity ?>/index.php">Users-antigravity</a></li>
+                  <li><a class="dropdown-item diary-green" href="<?= $base_url_perfume_antigravity ?>/index.php">Perfume-antigravity</a></li>
                   <li><a class="dropdown-item diary-green" href="<?= $base_url_users ?>/dashboard.php">Users</a></li>
                   <li><a class="dropdown-item diary-green" href="<?= $base_url_users ?>/register.php">User-Register</a></li>
                   <li><a class="dropdown-item diary-green" href="<?= $base_url_users ?>/login.php">User-Login</a></li>

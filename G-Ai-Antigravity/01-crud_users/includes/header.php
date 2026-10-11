@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Common Application Header
  */
@@ -15,20 +16,24 @@ $pageTitle = isset($pageTitle) ? $pageTitle . ' - ' . APP_NAME : APP_NAME . ' - 
 ?>
 <!DOCTYPE html>
 <html lang="en" class="h-100">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= e($pageTitle) ?></title>
-    
+
     <!-- Bootstrap 5.3 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    
+
     <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    
+
     <!-- Custom Application CSS -->
     <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/style.css">
+    <!-- ICO favicon (fallback) -->
+    <link rel="shortcut icon" href="assets/images/favicon.ico" type="image/x-icon">
 </head>
+
 <body class="d-flex flex-column h-100">
 
     <!-- Top Navigation Bar -->
@@ -38,7 +43,7 @@ $pageTitle = isset($pageTitle) ? $pageTitle . ' - ' . APP_NAME : APP_NAME . ' - 
                 <i class="bi bi-people-fill text-primary fs-4"></i>
                 <span><?= APP_NAME ?></span>
             </a>
-            
+
             <button class="navbar-toggler" type="button" data-bs-auto-close="true" data-bs-toggle="collapse" data-bs-target="#navbarMain" aria-controls="navbarMain" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -68,9 +73,9 @@ $pageTitle = isset($pageTitle) ? $pageTitle . ' - ' . APP_NAME : APP_NAME . ' - 
                     <?php if ($loggedIn && $currentUser): ?>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle d-flex align-items-center gap-2 py-1" href="#" id="userMenuDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <img src="<?= get_user_avatar($currentUser['avatar'], $currentUser['first_name'], $currentUser['last_name']) ?>" 
-                                     alt="<?= e($currentUser['first_name']) ?>" 
-                                     class="avatar-img avatar-sm">
+                                <img src="<?= get_user_avatar($currentUser['avatar'], $currentUser['first_name'], $currentUser['last_name']) ?>"
+                                    alt="<?= e($currentUser['first_name']) ?>"
+                                    class="avatar-img avatar-sm">
                                 <div class="d-flex flex-column text-start">
                                     <span class="fw-semibold lh-1 small"><?= e($currentUser['first_name'] . ' ' . $currentUser['last_name']) ?></span>
                                     <span class="text-muted" style="font-size: 0.72rem;"><?= ucfirst($currentUser['role']) ?></span>
@@ -91,7 +96,9 @@ $pageTitle = isset($pageTitle) ? $pageTitle . ' - ' . APP_NAME : APP_NAME . ' - 
                                         <i class="bi bi-person-plus me-2 text-success"></i> Add New User
                                     </a>
                                 </li>
-                                <li><hr class="dropdown-divider my-1"></li>
+                                <li>
+                                    <hr class="dropdown-divider my-1">
+                                </li>
                                 <li>
                                     <a class="dropdown-item py-2 text-danger" href="<?= BASE_URL ?>logout.php">
                                         <i class="bi bi-box-arrow-right me-2"></i> Sign Out

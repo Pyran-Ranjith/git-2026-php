@@ -12,6 +12,7 @@ function getBaseUrl()
     // echo "<br>";
     // echo "Shost = " . $_SERVER['HTTP_HOST'] . "";
     // echo "<br>";
+    // echo $_SERVER['DOCUMENT_ROOT'] . "/git-2026-php/02_Personal";
     $Sscript = $_SERVER['SCRIPT_NAME'];
     // echo "Sscript = " . $_SERVER['SCRIPT_NAME'] . "";
     // echo "<br>";
@@ -39,6 +40,12 @@ $base_url_diary  = $base_url_root  . "/Diary";
 $base_path_diary = $base_path_root . "/Diary"; // Use file system path, NOT URL foo require_once
 $base_url_users  = $base_url_root  . "/Users";
 $base_path_users = $base_path_root . "/Users"; // Use file system path, NOT URL foo require_once
+$base_url_users_antigravity  = $base_url_root  . "/Users-antigravity";
+$base_path_users_antigravity = $base_path_root . "/Users-antigravity"; // Use file system path, NOT URL foo require_once
+$base_url_perfume_antigravity  = $base_url_root  . "/Perfume-antigravity";
+$base_path_perfume_antigravity = $base_path_root . "/Perfume-antigravity"; // Use file system path, NOT URL foo require_once
+$base_url_02_personal  = $_SERVER['DOCUMENT_ROOT'] . "/git-2026-php/02_Personal";
+$base_path_02_personal = $base_path_root . "/02_Personal"; // Use file system path, NOT URL foo require_once
 
 
 // echo "<br><br>";
