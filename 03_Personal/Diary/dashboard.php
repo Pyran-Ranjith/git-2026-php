@@ -1,14 +1,13 @@
 <!-- dashboard.php -->
 <?php
+/** @var String $cat */
+$cat = trim($_POST['cat'] ?? '');
+?>
+<?php
 require_once "../config_db.php";
 require_once "include/header.php";
-// global $conn;
 ?>
 
-<!-- <title>Diary-Dashboard</title>
-</head>
-
-<body> -->
 <?php
 $msg_type = ($_GET["msg_type"] ?? "");
 $msg = ($_GET["msg"] ?? "");
@@ -27,30 +26,23 @@ $msg = ($_GET["msg"] ?? "");
 <?php } ?>
 
 
-  <!-- Page Header -->
-  <header class="py-4 border-bottom border-secondary border-opacity-10 mb-4">
-    <div class="container">
-      <nav aria-label="breadcrumb">
-        <ol class="breadcrumb mb-1 small">
-          <li class="breadcrumb-item"><a href="dashboard.php" class="text-gold text-decoration-none">Dashboard</a></li>
-          <li class="breadcrumb-item"><a href="admin.php" class="text-gold text-decoration-none">Admin</a></li>
-          <li class="breadcrumb-item active text-muted" aria-current="page">Add Record</li>
-        </ol>
-      </nav>
-      <h1 class="brand-font h2 fw-bold text-white mb-0">Dashboard Diary Entries</h1>
-      <p class="text-muted mb-0">View Diary entries in card view and navigate to manage them.</p>
-    </div>
-  </header>
-<!-- <noscript> -->
+<!-- Page Header -->
+<header class="py-4 border-bottom border-secondary border-opacity-10 mb-4">
+  <div class="container">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb mb-1 small">
+        <li class="breadcrumb-item"><a href="dashboard.php" class="text-gold text-decoration-none">Dashboard</a></li>
+        <li class="breadcrumb-item"><a href="admin.php" class="text-gold text-decoration-none">Manage</a></li>
+        <li class="breadcrumb-item active text-muted" aria-current="page">Add Record</li>
+      </ol>
+    </nav>
+    <h1 class="brand-font h2 fw-bold text-white mb-0">Dashboard Diary Entries</h1>
+    <p class="text-muted mb-0">View Diary entries in card view and navigate to manage them.</p>
+  </div>
+</header>
+
 <!-- Boxes -->
 <section class="p-0" id="diary_cards">
-  <!-- <div class="container mt-3 mb-2">
-    <div class="card">
-      <div class="card-header bg-dark text-light">
-        <h4 class="mb-0 text-center">Diary - Categories</h4>
-      </div>
-    </div>
-  </div> -->
   <?php
   // Default filters
   $date_from    = $sql_date_from ?? '';
@@ -60,6 +52,7 @@ $msg = ($_GET["msg"] ?? "");
   // $event     = $_GET['event'] ?? '';   // ✅ add this
   $event  = $sql_event ?? '';
   $sql_orderby = "DESC";
+  $srch_event_placeholder = "Search event...";
   ?>
 
   <div class="container">
@@ -72,6 +65,7 @@ $msg = ($_GET["msg"] ?? "");
       $sql_categry = "bill_monthly";
       $sql_event = "634.75";
       $sql_orderby = "ASC";
+      $srch_event_placeholder = "Search event...";
       require "include/card_box_diary.php";
       ?>
 
@@ -80,14 +74,16 @@ $msg = ($_GET["msg"] ?? "");
       $card_header = "Helth";
       $card_bg = "bg-success";
       $sql_categry = "helth";
+      $srch_event_placeholder = "Search event...";
       require "include/card_box_diary.php";
       ?>
 
-      <!-- Category: Login -->
+      <!-- Category: General -->
       <?php
-      $card_header = "Login";
+      $card_header = "Genaral";
       $card_bg = "bg-primary";
-      $sql_categry = "login";
+      $sql_categry = "genaral";
+      $srch_event_placeholder = "Cricket,Tv or Type event...";
       require "include/card_box_diary.php";
       ?>
 
@@ -96,6 +92,7 @@ $msg = ($_GET["msg"] ?? "");
       $card_header = "Donation";
       $card_bg = "bg-info";
       $sql_categry = "donation";
+      $srch_event_placeholder = "Search event...";
       require "include/card_box_diary.php";
       ?>
 
@@ -104,6 +101,16 @@ $msg = ($_GET["msg"] ?? "");
       $card_header = "Lending";
       $card_bg = "bg-success";
       $sql_categry = "lending";
+      $srch_event_placeholder = "Search event...";
+      require "include/card_box_diary.php";
+      ?>
+
+      <!-- Category: Login -->
+      <?php
+      $card_header = "Login";
+      $card_bg = "bg-primary";
+      $sql_categry = "login";
+      $srch_event_placeholder = "Search event...";
       require "include/card_box_diary.php";
       ?>
 
@@ -138,66 +145,66 @@ $msg = ($_GET["msg"] ?? "");
           <i class="bi bi-tag me-2"></i> Search Diary
         </h5>
         <div class="card-body">
-          <form method="GET" action="" class="row g-3 align-items-end">
-            <div class="col-md-3">
-              <label for="date_from" class="form-label">Date From</label>
-              <input type="date" class="form-control" id="date_from" name="date_from"
-                value="<?= htmlspecialchars($_GET['date_from'] ?? '') ?>">
-            </div>
-            <div class="col-md-3">
-              <label for="date_to" class="form-label">Date To</label>
-              <input type="date" class="form-control" id="date_to" name="date_to"
-                value="<?= htmlspecialchars($_GET['date_to'] ?? '') ?>">
-            </div>
-            <div class="col-md-3">
-              <label for="status" class="form-label">Status</label>
-              <select class="form-select" id="status" name="status">
-                <option value="">-- All --</option>
-                <?php
-                $conn_status = getConn1("ranjith_personal");
-                $status_sql = "SELECT DISTINCT `status` FROM `diary` ORDER BY `status` ASC";
-                $status_result = mysqli_query($conn_status, $status_sql);
-                $selected_status = $_GET['status'] ?? '';
-                while ($srow = mysqli_fetch_assoc($status_result)) {
-                  $sel = ($selected_status == $srow['status']) ? 'selected' : '';
-                  echo '<option value="' . htmlspecialchars($srow['status']) . '" ' . $sel . '>'
-                    . htmlspecialchars($srow['status']) . '</option>';
-                }
-                ?>
-              </select>
-            </div>
-            <div class="col-md-3">
-              <label for="category" class="form-label">Category</label>
-              <select class="form-select" id="category" name="category">
-                <option value="">-- All --</option>
-                <?php
-                $conn_category = getConn1("ranjith_personal");
-                $category_sql = "SELECT DISTINCT `category` FROM `diary` ORDER BY `category` ASC";
-                $category_result = mysqli_query($conn_category, $category_sql);
-                $selected_category = $_GET['category'] ?? '';
-                while ($srow = mysqli_fetch_assoc($category_result)) {
-                  $sel = ($selected_category == $srow['category']) ? 'selected' : '';
-                  echo '<option value="' . htmlspecialchars($srow['category']) . '" ' . $sel . '>'
-                    . htmlspecialchars($srow['category']) . '</option>';
-                }
-                ?>
-              </select>
-            </div>
 
-            <!-- ✅ NEW: Event search field -->
-            <div class="col-md-3">
-              <label for="event" class="form-label">Event</label>
-              <input type="text" class="form-control" id="event" name="event"
-                placeholder="Search event..."
-                value="<?= htmlspecialchars($_GET['event'] ?? '') ?>">
-            </div>
+          <div class="col-md-3">
+            <label for="date_from" class="form-label">Date From</label>
+            <input type="date" class="form-control" id="date_from" name="date_from"
+              value="<?= htmlspecialchars($_GET['date_from'] ?? '') ?>">
+          </div>
+          <div class="col-md-3">
+            <label for="date_to" class="form-label">Date To</label>
+            <input type="date" class="form-control" id="date_to" name="date_to"
+              value="<?= htmlspecialchars($_GET['date_to'] ?? '') ?>">
+          </div>
+          <div class="col-md-3">
+            <label for="status" class="form-label">Status</label>
+            <select class="form-select" id="status" name="status">
+              <option value="">-- All --</option>
+              <?php
+              $conn_status = getConn1("ranjith_personal");
+              $status_sql = "SELECT DISTINCT `status` FROM `diary` ORDER BY `status` ASC";
+              $status_result = mysqli_query($conn_status, $status_sql);
+              $selected_status = $_GET['status'] ?? '';
+              while ($srow = mysqli_fetch_assoc($status_result)) {
+                $sel = ($selected_status == $srow['status']) ? 'selected' : '';
+                echo '<option value="' . htmlspecialchars($srow['status']) . '" ' . $sel . '>'
+                  . htmlspecialchars($srow['status']) . '</option>';
+              }
+              ?>
+            </select>
+          </div>
+          <div class="col-md-3">
+            <label for="category" class="form-label">Category</label>
+            <select class="form-select" id="category" name="category">
+              <option value="">-- All --</option>
+              <?php
+              $conn_category = getConn1("ranjith_personal");
+              $category_sql = "SELECT DISTINCT `category` FROM `diary` ORDER BY `category` ASC";
+              $category_result = mysqli_query($conn_category, $category_sql);
+              $selected_category = $_GET['category'] ?? '';
+              while ($srow = mysqli_fetch_assoc($category_result)) {
+                $sel = ($selected_category == $srow['category']) ? 'selected' : '';
+                echo '<option value="' . htmlspecialchars($srow['category']) . '" ' . $sel . '>'
+                  . htmlspecialchars($srow['category']) . '</option>';
+              }
+              ?>
+            </select>
+          </div>
 
-            <div class="col-md-3 d-flex gap-2">
-              <button type="submit" class="btn btn-primary w-100">
-                <i class="bi bi-search"></i> Search
-              </button>
-              <a href="dashboard.php" class="btn btn-outline-dark w-100">Reset</a>
-            </div>
+          <!-- ✅ NEW: Event search field -->
+          <div class="col-md-3">
+            <label for="event" class="form-label">Event</label>
+            <input type="text" class="form-control" id="event" name="event"
+              placeholder="Search event..."
+              value="<?= htmlspecialchars($_GET['event'] ?? '') ?>">
+          </div>
+
+          <div class="col-md-3 d-flex gap-2">
+            <button type="submit" class="btn btn-primary w-100">
+              <i class="bi bi-search"></i> Search
+            </button>
+            <a href="dashboard.php" class="btn btn-outline-dark w-100">Reset</a>
+          </div>
           </form>
         </div>
       </div>
@@ -207,9 +214,7 @@ $msg = ($_GET["msg"] ?? "");
       <div class="d-grid gap-2 d-md-flex justify-content-md-end">
         <a href="admin.php" class="btn btn-success mb-3">Manage All</a>
       </div>
-      <!-- <table class="table table-hover text-center "> -->
       <table class="table-luxury table table-hover  ">
-        <!-- <thead class="table-dark"> -->
         <thead>
           <tr>
             <th scope="col">ID</th>
@@ -221,7 +226,6 @@ $msg = ($_GET["msg"] ?? "");
           </tr>
         </thead>
         <tbody>
-          <!-- BM-2 -->
 
           <?php
           $conn = getConn1("ranjith_personal");
@@ -292,7 +296,7 @@ $msg = ($_GET["msg"] ?? "");
               <td><?= htmlspecialchars($row["category"]) ?></td>
               <td><?= htmlspecialchars($row["event"]) ?></td>
               <td>
-                <a class="btn btn-success btn-sm me-0" href="diary/admin.php?rec_filter=Manage&id=<?php echo $row["id"] ?>" role="button">Manage</a>
+                <a class="btn btn-success btn-sm me-0" href="admin.php?rec_filter=Manage&id=<?php echo $row["id"] ?>" role="button">Manage</a>
               </td>
             </tr>
           <?php
@@ -303,18 +307,18 @@ $msg = ($_GET["msg"] ?? "");
 
       <div class="d-grid gap-2 d-md-flex justify-content-md-end">
         <a href="#top" class="btn btn-warning mb-3">Jump Top</a>
-        <!-- <i class="fas fa-arrow-up fas-warning"></i> -->
       </div>
 
     </div>
-
 </section>
-<!-- </noscript> -->
 
-<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-
-</html> -->
+<script>
+  document.getElementById('eventSelect').addEventListener('change', function() {
+    if (this.value !== '') {
+      document.getElementById('event').value = this.value;
+    }
+  });
+</script>
 
 <?php
 require_once "include/footer.php";

@@ -196,6 +196,11 @@ if (isset($_POST["submit"])) {
               <?= ($row['category'] == 'taskrepeated') ? 'checked' : '' ?> />
             <label class="form-check-label" for="taskrepeated"> Task Repeated </label>
           </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="category" id="genaral" value="genaral"
+              <?= ($row['category'] == 'genaral') ? 'checked' : '' ?> />
+            <label class="form-check-label" for="genaral"> Genaral </label>
+          </div>
         </div>
         
         <div class="col">

@@ -167,6 +167,10 @@ if (isset($_POST["submit"])) {
             <input class="form-check-input" type="radio" name="category" id="taskrepeated" value="taskrepeated" />
             <label class="form-check-label" for="taskrepeated"> Task Repeated </label>
           </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="category" id="genaral" value="genaral" />
+            <label class="form-check-label" for="genaral"> Genaral </label>
+          </div>
         </div>
         <div class="col">
 
@@ -188,7 +192,11 @@ if (isset($_POST["submit"])) {
 
   <!-- <div class="container"> -->
   <!-- </div> -->
-  </form>
+  </form
+  
+  
+  
+  >
   </div>
   <!-- </main> -->
 

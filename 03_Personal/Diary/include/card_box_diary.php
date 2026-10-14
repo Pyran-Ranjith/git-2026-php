@@ -14,9 +14,7 @@
            <span class="fw-bold fs-4 text-center"><?= $card_header ?></span>
          </div>
          <div class="card-body" style="max-height: 400px; overflow-y: auto;">
-           <!-- <div class="table-responsive"> -->
            <table class="table table-luxury table-hover text-center">
-             <!-- <table class="table table-hover"> -->
              <thead class="table-dark">
                <tr>
                  <th scope="col">Status</th>
@@ -26,9 +24,7 @@
              </thead>
              <tbody>
                <?php
-                // $conn = getConn1($_database);
                 $conn = getConn1();
-                // $conn = getConn1($g_server_localhost, $g_server_infinityfree);
                 // Build query with optional filters
                 $date_from    = $sql_date_from ?? '';
                 $date_to    = $sql_date_to ?? '';
@@ -40,8 +36,7 @@
                 $params = [];
                 $types = '';
 
-                // Getting search parameters
-                $event     = $_GET['event'] ?? '';
+                $event     = $_GET['event'] ?? '';;
                 $category_event     = $_GET['category_event'] ?? '';
 
                 if ($date_from !== '') {
@@ -112,18 +107,22 @@
                 ?>
              </tbody>
            </table>
-           <!-- </div> -->
 
            <?php
-            $event0 = $_GET['event'] ?? '';
-            // Initialize to empty string so it's always defined
             $value0 = '';
+            $value0 = '';
+            $category1 = $_GET['category1'] ?? '';
+            $event0     = $_GET['event'] ?? '';
+            // Initialize to empty string so it's always defined
             $search_input_bg_color = "white";
 
             // Only keep the event value if the category matches
             if ($event0 !== '' && isset($category_event) && $category_event === $category) {
               $value0 = htmlspecialchars($event0);
+              $value0     = $category1 ?? $value0;
               $search_input_bg_color = "#9bf2a2";  // Light green
+            } else {
+              $value0     = $category1;
             }
             ?>
            <!-- Search Form -->
@@ -151,6 +150,29 @@
                <div class="col-auto">
                  <a href="dashboard.php" class="btn btn-outline-dark btn-sm">Reset</a>
                </div>
+
+               <?php if (isset($sql_categry) && $sql_categry === 'genaral') { ?>
+                 <div class="container d-flex justify-content-left mt-2">
+                   <div class="row mb-3">
+                     <div class="form-group mb-3">
+                       <div>
+                         <div class="form-check form-check-inline">
+                           <input class="form-check-input" type="radio" name="category1" id="cricket1" value="cricket" />
+                           <label class="form-check-label fw-bold" for="cricket1"> Cricket </label>
+                         </div>
+
+                         <div class="form-check form-check-inline">
+                           <input class="form-check-input" type="radio" name="category1" id="tv1" value="tv" />
+                           <label class="form-check-label fw-bold" for="tv1"> Tv </label>
+                           <button type="submit" class="btn  btn-outline-dark btn-sm">
+                             Submit
+                           </button>
+                         </div>
+                       </div>
+                     </div>
+                   </div>
+                 </div>
+               <?php } ?>
              </form>
            </div>
          </div>
