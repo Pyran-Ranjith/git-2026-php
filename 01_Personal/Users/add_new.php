@@ -1,8 +1,11 @@
 <!-- add_new.php -->
 <?php
 ob_start();  // ← Add this as FIRST line to avoid 
-require_once "header.php";
-// session_start();
+if (session_status() === PHP_SESSION_NONE) {
+  session_start();
+}
+require_once "header-dashboard.php";
+require_once "include/islogedin.php";
 ?>
 
 <!-- bootstrap -->

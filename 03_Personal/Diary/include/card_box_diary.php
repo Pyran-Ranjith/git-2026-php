@@ -8,18 +8,27 @@
        }
      </style>
 
-     <div class="col-md-6 col-lg-4 mb-3">
+     <div id="<?= $tag_id ?>" class="col-md-6 col-lg-4 mb-3">
        <div class="card h-100 shadow-sm <?= $card_bg ?> text-dark">
          <div class="card-header d-flex justify-content-center align-items-center">
            <span class="fw-bold fs-4 text-center"><?= $card_header ?></span>
          </div>
          <div class="card-body" style="max-height: 400px; overflow-y: auto;">
-           <table class="table table-luxury table-hover text-center">
-             <thead class="table-dark">
+           <!-- <table class="table table-luxury table-hover text-center"> -->
+           <!-- <table class="table table-luxury table-hover"> -->
+
+      <table class="table-luxury table table-hover" style="table-layout: fixed; width: 100%;">
+        <colgroup>
+          <col style="width: 35%;">
+          <col style="width: 65%;">
+        </colgroup>
+
+
+           <thead class="table-dark">
                <tr>
                  <th scope="col">Status</th>
                  <th scope="col">Event</th>
-                 <th scope="col">Action</th>
+                 <!-- <th scope="col">Action</th> -->
                </tr>
              </thead>
              <tbody>
@@ -31,7 +40,7 @@
                 $status    = $sql_status ?? '';
                 $category  = $sql_categry ?? '';
                 $event  = $sql_event ?? '';
-
+                $cur_pgmname = basename($_SERVER['PHP_SELF']);
                 $conditions = [];
                 $params = [];
                 $types = '';
@@ -95,11 +104,12 @@
                      <?php else: ?>
                        <span class="badge bg-danger text-dark"><?= htmlspecialchars($row["status"]) ?></span>
                      <?php endif; ?>
-                   </td> <!-- <td><?= htmlspecialchars($row["category"]) ?></td> -->
-                   <td><?= htmlspecialchars($row["event"]) ?></td>
+                   </td>
                    <td>
-                     <!-- <a class="btn btn-dark btn-sm me-5" href="./admin.php?rec_filter=Manage&id=<?php echo $row["id"] ?>"><i class="fas fa-edit"></i></a> -->
-                     <a class="btn btn-secondary btn-sm me-5" href="./admin.php?rec_filter=Manage&id=<?php echo $row["id"] ?>"><i class="bi bi-arrow-right"></i></a>
+                     <a
+                       class="btn btn-secondary btn-sm me-5" href="./admin.php?rec_filter=Manage&id=<?php echo $row["id"] ?>&return_url=<?php echo $cur_pgmname ?>">
+                       <?= htmlspecialchars($row["event"]) ?>
+                     </a>
                    </td>
                  </tr>
                <?php
@@ -164,10 +174,17 @@
                          <div class="form-check form-check-inline">
                            <input class="form-check-input" type="radio" name="category1" id="tv1" value="tv" />
                            <label class="form-check-label fw-bold" for="tv1"> Tv </label>
-                           <button type="submit" class="btn  btn-outline-dark btn-sm">
-                             Submit
-                           </button>
                          </div>
+
+                         <div class="form-check form-check-inline">
+                           <input class="form-check-input" type="radio" name="category1" id="warranty1" value="warranty" />
+                           <label class="form-check-label fw-bold" for="warranty1"> Warranty </label>
+                         </div>
+
+                         <button type="submit" class="btn  btn-outline-dark btn-sm">
+                           Submit
+                         </button>
+
                        </div>
                      </div>
                    </div>

@@ -1,9 +1,11 @@
 <?php
 ob_start();  // ← Add this as FIRST line to avoid 
-require_once "header-dashboard.php";
 if (session_status() === PHP_SESSION_NONE) {
   session_start();
-} ?>
+}
+require_once "header-dashboard.php";
+require_once "include/islogedin.php";
+?>
 
 <title>Users-Dashboard</title>
 </head>
@@ -72,7 +74,7 @@ if (session_status() === PHP_SESSION_NONE) {
           require "include/card_box_diary.php";
           ?>
         </div>
-  <!-- </noscript> -->
+  </noscript>
 
   <noscript>
     <div class="col-md-6 col-lg-4 mb-3">
@@ -164,208 +166,208 @@ if (session_status() === PHP_SESSION_NONE) {
     </div>
     </section>
 
-</noscript>
+  </noscript>
 
 
-<noscript>
-      <!-- Box Users with search -->
-      <section class="p-3" id="diary_with_search">
-        <div class="container">
-          <div class="row text-center g-4">
-            <div class="col-md">
-              <div class="card bg-dark text-light">
-                <div class="card-body text-center">
-                  <div class="h1 mb-3">
-                    <i class="bi bi-laptop"></i>
-                  </div>
-                  <h3 class="card-title mb-3">Users with Search</h3>
+  <noscript>
+    <!-- Box Users with search -->
+    <section class="p-3" id="diary_with_search">
+      <div class="container">
+        <div class="row text-center g-4">
+          <div class="col-md">
+            <div class="card bg-dark text-light">
+              <div class="card-body text-center">
+                <div class="h1 mb-3">
+                  <i class="bi bi-laptop"></i>
                 </div>
+                <h3 class="card-title mb-3">Users with Search</h3>
               </div>
             </div>
           </div>
         </div>
+      </div>
 
-        <!-- Search Form -->
-        <div class="container mt-4">
-          <div class="card">
-            <div class="card-header bg-secondary text-light">
-              <h5 class="mb-0">Search Users</h5>
-            </div>
-            <div class="card-body">
-              <form method="GET" action="" class="row g-3 align-items-end">
-                <div class="col-md-3">
-                  <label for="date_from" class="form-label">Date From</label>
-                  <input type="date" class="form-control" id="date_from" name="date_from"
-                    value="<?= htmlspecialchars($_GET['date_from'] ?? '') ?>">
-                </div>
-                <div class="col-md-3">
-                  <label for="date_to" class="form-label">Date To</label>
-                  <input type="date" class="form-control" id="date_to" name="date_to"
-                    value="<?= htmlspecialchars($_GET['date_to'] ?? '') ?>">
-                </div>
-                <div class="col-md-3">
-                  <label for="status" class="form-label">Status</label>
-                  <select class="form-select" id="status" name="status">
-                    <option value="">-- All --</option>
-                    <?php
-                    $conn_status = getConn1("ranjith_personal");
-                    $status_sql = "SELECT DISTINCT `status` FROM `diary` ORDER BY `status` ASC";
-                    $status_result = mysqli_query($conn_status, $status_sql);
-                    $selected_status = $_GET['status'] ?? '';
-                    while ($srow = mysqli_fetch_assoc($status_result)) {
-                      $sel = ($selected_status == $srow['status']) ? 'selected' : '';
-                      echo '<option value="' . htmlspecialchars($srow['status']) . '" ' . $sel . '>'
-                        . htmlspecialchars($srow['status']) . '</option>';
-                    }
-                    ?>
-                  </select>
-                </div>
-                <div class="col-md-3">
-                  <label for="category" class="form-label">Category</label>
-                  <select class="form-select" id="category" name="category">
-                    <option value="">-- All --</option>
-                    <?php
-                    $conn_category = getConn1("ranjith_personal");
-                    $category_sql = "SELECT DISTINCT `category` FROM `diary` ORDER BY `category` ASC";
-                    $category_result = mysqli_query($conn_category, $category_sql);
-                    $selected_category = $_GET['category'] ?? '';
-                    while ($srow = mysqli_fetch_assoc($category_result)) {
-                      $sel = ($selected_category == $srow['category']) ? 'selected' : '';
-                      echo '<option value="' . htmlspecialchars($srow['category']) . '" ' . $sel . '>'
-                        . htmlspecialchars($srow['category']) . '</option>';
-                    }
-                    ?>
-                  </select>
-                </div>
+      <!-- Search Form -->
+      <div class="container mt-4">
+        <div class="card">
+          <div class="card-header bg-secondary text-light">
+            <h5 class="mb-0">Search Users</h5>
+          </div>
+          <div class="card-body">
+            <form method="GET" action="" class="row g-3 align-items-end">
+              <div class="col-md-3">
+                <label for="date_from" class="form-label">Date From</label>
+                <input type="date" class="form-control" id="date_from" name="date_from"
+                  value="<?= htmlspecialchars($_GET['date_from'] ?? '') ?>">
+              </div>
+              <div class="col-md-3">
+                <label for="date_to" class="form-label">Date To</label>
+                <input type="date" class="form-control" id="date_to" name="date_to"
+                  value="<?= htmlspecialchars($_GET['date_to'] ?? '') ?>">
+              </div>
+              <div class="col-md-3">
+                <label for="status" class="form-label">Status</label>
+                <select class="form-select" id="status" name="status">
+                  <option value="">-- All --</option>
+                  <?php
+                  $conn_status = getConn1("ranjith_personal");
+                  $status_sql = "SELECT DISTINCT `status` FROM `diary` ORDER BY `status` ASC";
+                  $status_result = mysqli_query($conn_status, $status_sql);
+                  $selected_status = $_GET['status'] ?? '';
+                  while ($srow = mysqli_fetch_assoc($status_result)) {
+                    $sel = ($selected_status == $srow['status']) ? 'selected' : '';
+                    echo '<option value="' . htmlspecialchars($srow['status']) . '" ' . $sel . '>'
+                      . htmlspecialchars($srow['status']) . '</option>';
+                  }
+                  ?>
+                </select>
+              </div>
+              <div class="col-md-3">
+                <label for="category" class="form-label">Category</label>
+                <select class="form-select" id="category" name="category">
+                  <option value="">-- All --</option>
+                  <?php
+                  $conn_category = getConn1("ranjith_personal");
+                  $category_sql = "SELECT DISTINCT `category` FROM `diary` ORDER BY `category` ASC";
+                  $category_result = mysqli_query($conn_category, $category_sql);
+                  $selected_category = $_GET['category'] ?? '';
+                  while ($srow = mysqli_fetch_assoc($category_result)) {
+                    $sel = ($selected_category == $srow['category']) ? 'selected' : '';
+                    echo '<option value="' . htmlspecialchars($srow['category']) . '" ' . $sel . '>'
+                      . htmlspecialchars($srow['category']) . '</option>';
+                  }
+                  ?>
+                </select>
+              </div>
 
-                <!-- ✅ NEW: Event search field -->
-                <div class="col-md-3">
-                  <label for="event" class="form-label">Event</label>
-                  <input type="text" class="form-control" id="event" name="event"
-                    placeholder="Search event..."
-                    value="<?= htmlspecialchars($_GET['event'] ?? '') ?>">
-                </div>
+              <!-- ✅ NEW: Event search field -->
+              <div class="col-md-3">
+                <label for="event" class="form-label">Event</label>
+                <input type="text" class="form-control" id="event" name="event"
+                  placeholder="Search event..."
+                  value="<?= htmlspecialchars($_GET['event'] ?? '') ?>">
+              </div>
 
-                <div class="col-md-3 d-flex gap-2">
-                  <button type="submit" class="btn btn-primary w-100">
-                    <i class="bi bi-search"></i> Search
-                  </button>
-                  <a href="dashboard.php" class="btn btn-outline-dark w-100">Reset</a>
-                </div>
-              </form>
-            </div>
+              <div class="col-md-3 d-flex gap-2">
+                <button type="submit" class="btn btn-primary w-100">
+                  <i class="bi bi-search"></i> Search
+                </button>
+                <a href="dashboard.php" class="btn btn-outline-dark w-100">Reset</a>
+              </div>
+            </form>
           </div>
         </div>
+      </div>
 
-        <div class="container mt-3">
-          <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-            <a href="users/admin.php" class="btn btn-success mb-3">Manage All</a>
-          </div>
-          <table class="table table-hover text-center ">
-            <thead class="table-dark">
+      <div class="container mt-3">
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+          <a href="users/admin.php" class="btn btn-success mb-3">Manage All</a>
+        </div>
+        <table class="table table-hover text-center ">
+          <thead class="table-dark">
+            <tr>
+              <th scope="col">ID</th>
+              <th scope="col">Created_at</th>
+              <!-- <th scope="col">Status</th> -->
+              <!-- <th scope="col">Category</th> -->
+              <th scope="col">Username </th>
+              <th scope="col">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- BM-2 -->
+
+
+
+
+            <?php
+            $conn = getConn1("ranjith_personal");
+
+            // Build query with optional filters
+            $date_from = $_GET['date_from'] ?? '';
+            $date_to   = $_GET['date_to'] ?? '';
+            $status    = $_GET['status'] ?? '';
+            $category    = $_GET['category'] ?? '';
+
+            $conditions = [];
+            $params = [];
+            $types = '';
+
+            if ($date_from !== '') {
+              $conditions[] = "`date` >= ?";
+              $params[] = $date_from;
+              $types .= 's';
+            }
+            if ($date_to !== '') {
+              $conditions[] = "`date` <= ?";
+              $params[] = $date_to;
+              $types .= 's';
+            }
+            if ($status !== '') {
+              $conditions[] = "`status` = ?";
+              $params[] = $status;
+              $types .= 's';
+            }
+            if ($category !== '') {
+              $conditions[] = "`category` = ?";
+              $params[] = $category;
+              $types .= 's';
+            }
+
+            // ✅ NEW: Event filter (partial match, case-insensitive)
+            $event = $_GET['event'] ?? '';
+            if ($event !== '') {
+              $conditions[] = "`event` LIKE ?";
+              $params[] = '%' . $event . '%';
+              $types .= 's';
+            }
+            $sql = "SELECT * FROM `users`";
+            if (!empty($conditions)) {
+              $sql .= " WHERE " . implode(" AND ", $conditions);
+            }
+            $sql .= " ORDER BY `created_at` DESC";
+
+            if (!empty($params)) {
+              $stmt = mysqli_prepare($conn, $sql);
+              mysqli_stmt_bind_param($stmt, $types, ...$params);
+              mysqli_stmt_execute($stmt);
+              $result = mysqli_stmt_get_result($stmt);
+            } else {
+              $result = mysqli_query($conn, $sql);
+            }
+
+            if (mysqli_num_rows($result) === 0) {
+              echo '<tr><td colspan="6" class="text-muted">No records found.</td></tr>';
+            }
+
+            while ($row = mysqli_fetch_assoc($result)) {
+            ?>
               <tr>
-                <th scope="col">ID</th>
-                <th scope="col">Created_at</th>
-                <!-- <th scope="col">Status</th> -->
-                <!-- <th scope="col">Category</th> -->
-                <th scope="col">Username </th>
-                <th scope="col">Action</th>
+                <td><?= htmlspecialchars($row["id"]) ?></td>
+                <td><?= htmlspecialchars($row["created_at"]) ?></td>
+                <td><?= htmlspecialchars($row["status"]) ?></td>
+                <td><?= htmlspecialchars($row["category"]) ?></td>
+                <td><?= htmlspecialchars($row["event"]) ?></td>
+                <td>
+                  <a class="btn btn-success btn-sm me-0" href="users/admin.php?rec_filter=Manage&id=<?php echo $row["id"] ?>" role="button">Manage</a>
+                </td>
               </tr>
-            </thead>
-            <tbody>
-              <!-- BM-2 -->
-
-
-
-
-              <?php
-              $conn = getConn1("ranjith_personal");
-
-              // Build query with optional filters
-              $date_from = $_GET['date_from'] ?? '';
-              $date_to   = $_GET['date_to'] ?? '';
-              $status    = $_GET['status'] ?? '';
-              $category    = $_GET['category'] ?? '';
-
-              $conditions = [];
-              $params = [];
-              $types = '';
-
-              if ($date_from !== '') {
-                $conditions[] = "`date` >= ?";
-                $params[] = $date_from;
-                $types .= 's';
-              }
-              if ($date_to !== '') {
-                $conditions[] = "`date` <= ?";
-                $params[] = $date_to;
-                $types .= 's';
-              }
-              if ($status !== '') {
-                $conditions[] = "`status` = ?";
-                $params[] = $status;
-                $types .= 's';
-              }
-              if ($category !== '') {
-                $conditions[] = "`category` = ?";
-                $params[] = $category;
-                $types .= 's';
-              }
-
-              // ✅ NEW: Event filter (partial match, case-insensitive)
-              $event = $_GET['event'] ?? '';
-              if ($event !== '') {
-                $conditions[] = "`event` LIKE ?";
-                $params[] = '%' . $event . '%';
-                $types .= 's';
-              }
-              $sql = "SELECT * FROM `users`";
-              if (!empty($conditions)) {
-                $sql .= " WHERE " . implode(" AND ", $conditions);
-              }
-              $sql .= " ORDER BY `created_at` DESC";
-
-              if (!empty($params)) {
-                $stmt = mysqli_prepare($conn, $sql);
-                mysqli_stmt_bind_param($stmt, $types, ...$params);
-                mysqli_stmt_execute($stmt);
-                $result = mysqli_stmt_get_result($stmt);
-              } else {
-                $result = mysqli_query($conn, $sql);
-              }
-
-              if (mysqli_num_rows($result) === 0) {
-                echo '<tr><td colspan="6" class="text-muted">No records found.</td></tr>';
-              }
-
-              while ($row = mysqli_fetch_assoc($result)) {
-              ?>
-                <tr>
-                  <td><?= htmlspecialchars($row["id"]) ?></td>
-                  <td><?= htmlspecialchars($row["created_at"]) ?></td>
-                  <td><?= htmlspecialchars($row["status"]) ?></td>
-                  <td><?= htmlspecialchars($row["category"]) ?></td>
-                  <td><?= htmlspecialchars($row["event"]) ?></td>
-                  <td>
-                    <a class="btn btn-success btn-sm me-0" href="users/admin.php?rec_filter=Manage&id=<?php echo $row["id"] ?>" role="button">Manage</a>
-                  </td>
-                </tr>
-              <?php
-              }
-              ?>
-            </tbody>
-          </table>
-          <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-            <a href="#top" class="btn btn-warning mb-3">Jump Top</a>
-            <!-- <i class="fas fa-arrow-up fas-warning"></i> -->
-          </div>
-
+            <?php
+            }
+            ?>
+          </tbody>
+        </table>
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+          <a href="#top" class="btn btn-warning mb-3">Jump Top</a>
+          <!-- <i class="fas fa-arrow-up fas-warning"></i> -->
         </div>
 
-      </section>
-    </noscript>
+      </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    </section>
+  </noscript>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

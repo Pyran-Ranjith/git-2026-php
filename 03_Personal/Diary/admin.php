@@ -18,6 +18,7 @@ $conn = getConn1("ranjith_personal");
   /** @var String $base_url_root */
   /** @var String $base_url_diary */
   /** @var String $error_msg */
+  $return_url = $_GET['return_url'] ?? 'admin.php';
   ?>
 
   <!-- Parameter Alert -->
@@ -40,17 +41,17 @@ $conn = getConn1("ranjith_personal");
   </secction>
 
   <?php
-  
-$err = false;
 
-// Disable MySQLi exceptions
-mysqli_report(MYSQLI_REPORT_OFF);
+  $err = false;
 
-// Enable error reporting for development
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
+  // Disable MySQLi exceptions
+  mysqli_report(MYSQLI_REPORT_OFF);
 
-$id = ($_GET["id"] ?? "");
+  // Enable error reporting for development
+  error_reporting(E_ALL);
+  ini_set('display_errors', 1);
+
+  $id = ($_GET["id"] ?? "");
   $rec_filter = ($_GET["rec_filter"] ?? "");
   $msg_type = ($_GET["msg_type"] ?? "");
   $msg = ($_GET["msg"] ?? "");
@@ -67,7 +68,7 @@ $id = ($_GET["id"] ?? "");
     </div> -->
   <?php } ?>
 
-<!-- Main Content Container -->
+  <!-- Main Content Container -->
 
   <!-- Page Header -->
   <header class="py-4 border-bottom border-secondary border-opacity-10 mb-4">
@@ -84,79 +85,82 @@ $id = ($_GET["id"] ?? "");
     </div>
   </header>
 
-<main class="container mb-5">
-  <!-- <div class="container mt-3"> -->
+  <main class="container mb-5">
+    <!-- <div class="container mt-3"> -->
 
-  <!-- Table Card -->
-  <div class="luxury-card p-3 p-md-4 mb-4">
-    <div class="d-flex justify-content-between align-items-center mb-3">
-      <h3 class="mb-0">Manage Diary</h3>
-      <a href="add_new.php" class="btn btn-success">Add new record</a>
-    </div>
+    <!-- Table Card -->
+    <div class="luxury-card p-3 p-md-4 mb-4">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h3 class="mb-0">Manage Diary</h3>
+        <a href="add_new.php" class="btn btn-success">Add new record</a>
+      </div>
 
-    <div class="table-responsive">
-      <table class="table table-luxury table-hover text-center">
-        <!-- <thead class="table-dark"> -->
-        <thead">
-          <tr>
-            <th scope="col">ID</th>
-            <th scope="col">Date</th>
-            <th scope="col">Status</th>
-            <th scope="col">Category</th>
-            <th scope="col">Event</th>
-            <th scope="col">Action</th>
-          </tr>
-          </thead>
-          <tbody>
-            <?php
-            if ($rec_filter == "Manage") {
-              $sql = "SELECT * FROM `diary` WHERE id = $id LIMIT 1";
-            } else {
-              // $sql = "SELECT * FROM `diary` ORDER BY `date` DESC LIMIT 5";
-              $sql = "SELECT * FROM `diary` ORDER BY `date` DESC";
-            }
+      <div class="table-responsive">
+        <table class="table table-luxury table-hover text-center">
+          <!-- <thead class="table-dark"> -->
+          <thead">
+            <tr>
+              <th scope="col">ID</th>
+              <th scope="col">Date</th>
+              <th scope="col">Status</th>
+              <th scope="col">Category</th>
+              <th scope="col">Event</th>
+              <th scope="col">Action</th>
+            </tr>
+            </thead>
+            <tbody>
+              <?php
+              if ($rec_filter == "Manage") {
+                $return_url = $_GET['return_url'] ?? 'admin.php';
+                $sql = "SELECT * FROM `diary` WHERE id = $id LIMIT 1";
+              } else {
+                $return_url = $_GET['return_url'] ?? 'admin.php';
+                // $sql = "SELECT * FROM `diary` ORDER BY `date` DESC LIMIT 5";
+                $sql = "SELECT * FROM `diary` ORDER BY `date` DESC";
+              }
 
-            $result = mysqli_query($conn, $sql);
-            while ($row = mysqli_fetch_assoc($result)) {
-            ?>
-              <tr>
-                <!-- <td><?= $row["id"] ?></td> -->
-                <td><?= $row["id"] ?></td>
-                <td><?= $row["date"] ?></td>
-                <td><?= $row["status"] ?></td>
-                <td><?= $row["category"] ?></td>
-                <td><?= $row["event"] ?></td>
-                <!-- With With buttons -->
-                <td>
-                  <!-- <a class="btn btn-primary btn-sm me-0" href="view.php?id=<?php echo $row["id"] ?>" role="button">View</a> -->
-                  <a class="btn btn-success btn-sm me-0" href="edit.php?id=<?php echo $row["id"] ?>" role="button">Edit</a>
-                  <!-- Delete Button to load the Delete Model-->
-                  <a class="btn btn-danger btn-sm me-0" data-bs-toggle="modal"
-                    data-bs-target="#deleteModal" data-id="<?= $row["id"] ?>">
-                    Delete
-                  </a>
-                </td>
+              $result = mysqli_query($conn, $sql);
+              while ($row = mysqli_fetch_assoc($result)) {
+              ?>
+                <tr>
+                  <!-- <td><?= $row["id"] ?></td> -->
+                  <td><?= $row["id"] ?></td>
+                  <td><?= $row["date"] ?></td>
+                  <td><?= $row["status"] ?></td>
+                  <td><?= $row["category"] ?></td>
+                  <td><?= $row["event"] ?></td>
+                  <!-- With With buttons -->
+                  <td>
+                    <!-- <a class="btn btn-primary btn-sm me-0" href="view.php?id=<?php echo $row["id"] ?>" role="button">View</a> -->
+                    <!-- <a class="btn btn-success btn-sm me-0" href="edit.php?id=<?php echo $row["id"] ?>" role="button">Edit</a> -->
+                    <a class="btn btn-success btn-sm me-0" href="edit.php?id=<?php echo $row["id"] ?>&return_url=<?php echo $return_url ?>" role="button">Edit</a>
+                    <!-- Delete Button to load the Delete Model-->
+                    <a class="btn btn-danger btn-sm me-0" data-bs-toggle="modal"
+                      data-bs-target="#deleteModal" data-id="<?= $row["id"] ?>">
+                      Delete
+                    </a>
+                  </td>
 
-                <!-- With Font Awesome Icons -->
-                <!-- <td> 
+                  <!-- With Font Awesome Icons -->
+                  <!-- <td> 
               <a href="edit.php?id=<?php echo $row["id"] ?>" class="link-primay"><i
                   class="fa-solid fa-pen-to-square fs-6 me-3"></i></a>
               <a href="edit.php?id=<?php echo $row["id"] ?>" class="link-success"><i
                   class="fa-solid fa-pen-to-square fs-6 me-3"></i></a>
               <a href="dxelete.php?id=<?= $row["id"] ?>" class="link-danger"><i class="fa-solid fa-trash fs-6"></i></a>
             </td> -->
-              </tr>
-            <?php
-            }
-            ?>
-          </tbody>
-      </table>
+                </tr>
+              <?php
+              }
+              ?>
+            </tbody>
+        </table>
+      </div>
+      <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+        <a href="#top" class="btn btn-warning mb-3">Jump Top</a>
+      </div>
     </div>
-    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-      <a href="#top" class="btn btn-warning mb-3">Jump Top</a>
-    </div>
-  </div>
-</main>
+  </main>
 
   <!-- Delete Confirmation Modal -->
   <div class="modal fade" id="deleteModal" tabindex="-1" aria-hidden="true bg-danger">
@@ -186,12 +190,12 @@ $id = ($_GET["id"] ?? "");
         var button = event.relatedTarget;
         var id = button.getAttribute('data-id');
         var confirmLink = document.getElementById('confirmDelete');
-        confirmLink.href = 'delete.php?id=' + id;
+        confirmLink.href = 'delete.php?id=' + id '&return_url=<?= $return_url ?>';
       });
     });
   </script>
 
 
-<?php
-require_once "include/footer.php";
-?>
+  <?php
+  require_once "include/footer.php";
+  ?>

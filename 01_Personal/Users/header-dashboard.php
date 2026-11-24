@@ -78,6 +78,24 @@
                   <li><a class="dropdown-item" href="#">Separated link</a></li> -->
                 </ul>
               </li>
+              <details class="dropdown">
+                <summary class="nav-link dropdown-toggle">
+                  <?php
+                  if (isset($_SESSION['currentuser']['username']) && $_SESSION['currentuser']['username']) {
+                    $currentuser =  htmlspecialchars($_SESSION['currentuser']['username']);
+                  } else {
+                    $currentuser = 'User';
+                  }
+                  ?>
+                  <?= $currentuser ?>
+
+                </summary>
+                <ul class="dropdown-menu show position-static">
+                  <!-- <li><a class="dropdown-item" href="<?= BASE_URL ?>/profile.php">My Profile</a></li> -->
+                  <li><a class="dropdown-item" href="register.php">Register</a></li>
+                  <li><a class="dropdown-item text-danger" href="logout.php">Sign Out</a></li>
+                </ul>
+              </details>
 
             </ul>
           </div>

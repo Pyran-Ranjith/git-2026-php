@@ -1,6 +1,12 @@
 <!-- dashboard.php -->
 <?php
+ob_start();  // ← Add this as FIRST line to avoid 
 /** @var String $cat */
+/** @var String $return_url */
+/** @var String $cur_pgmname */
+
+/* others */
+$cur_pgmname = basename($_SERVER['SCRIPT_NAME']);
 $cat = trim($_POST['cat'] ?? '');
 ?>
 <?php
@@ -36,12 +42,12 @@ $msg = ($_GET["msg"] ?? "");
         <li class="breadcrumb-item active text-muted" aria-current="page">Add Record</li>
       </ol>
     </nav>
-    <h1 class="brand-font h2 fw-bold text-white mb-0">Dashboard Diary Entries</h1>
+    <h1 class="brand-font h2 fw-bold text-white mb-0"> Diary Categories</h1>
     <p class="text-muted mb-0">View Diary entries in card view and navigate to manage them.</p>
   </div>
 </header>
 
-<!-- Boxes -->
+<!-- Category Boxes -->
 <section class="p-0" id="diary_cards">
   <?php
   // Default filters
@@ -53,15 +59,21 @@ $msg = ($_GET["msg"] ?? "");
   $event  = $sql_event ?? '';
   $sql_orderby = "DESC";
   $srch_event_placeholder = "Search event...";
+  $return_url = $cur_pgmname;
   ?>
 
   <div class="container">
+    <div id="page-1" class="d-grid gap-2 d-md-flex justify-content-md-end">
+      <a href="#search" class="btn btn-warning mb-2"><i class="bi bi-chevron-double-down"></i> Search Diary</a>
+    </div>
+
     <div class="row g-4">
 
       <!-- Category: Bills monthly -->
       <?php
+      $tag_id = "01";
       $card_header = "Bills monthly";
-      $card_bg = "bg-info";
+      $card_bg = "bg-secondary";
       $sql_categry = "bill_monthly";
       $sql_event = "634.75";
       $sql_orderby = "ASC";
@@ -71,6 +83,7 @@ $msg = ($_GET["msg"] ?? "");
 
       <!-- Category: Helth -->
       <?php
+      $tag_id = "02";
       $card_header = "Helth";
       $card_bg = "bg-success";
       $sql_categry = "helth";
@@ -80,6 +93,7 @@ $msg = ($_GET["msg"] ?? "");
 
       <!-- Category: General -->
       <?php
+      $tag_id = "03";
       $card_header = "Genaral";
       $card_bg = "bg-primary";
       $sql_categry = "genaral";
@@ -87,10 +101,17 @@ $msg = ($_GET["msg"] ?? "");
       require "include/card_box_diary.php";
       ?>
 
+      <div id="page-2" class="d-grid gap-2 d-md-flex justify-content-md-end">
+        <a href="#top" class="btn btn-warning mb-0"><i class="bi bi-arrow-left"></i></a>
+        <a href="#top" class="btn btn-warning mb-0"><i class="bi bi-chevron-double-up"></i></a>
+        <a href="#page-2" class="btn btn-warning mb-0"><i class="bi bi-arrow-right"></i></a>
+      </div>
+
       <!-- Category: Donation -->
       <?php
+      $tag_id = "04";
       $card_header = "Donation";
-      $card_bg = "bg-info";
+      $card_bg = "bg-secondary";
       $sql_categry = "donation";
       $srch_event_placeholder = "Search event...";
       require "include/card_box_diary.php";
@@ -98,6 +119,7 @@ $msg = ($_GET["msg"] ?? "");
 
       <!-- Category: Lending -->
       <?php
+      $tag_id = "05";
       $card_header = "Lending";
       $card_bg = "bg-success";
       $sql_categry = "lending";
@@ -107,6 +129,7 @@ $msg = ($_GET["msg"] ?? "");
 
       <!-- Category: Login -->
       <?php
+      $tag_id = "06";
       $card_header = "Login";
       $card_bg = "bg-primary";
       $sql_categry = "login";
@@ -114,14 +137,18 @@ $msg = ($_GET["msg"] ?? "");
       require "include/card_box_diary.php";
       ?>
 
-      <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-        <a href="#top" class="btn btn-warning mb-0">Jump Top</a>
+      <div id="page-3" class="d-grid gap-2 d-md-flex justify-content-md-end">
+        <a href="#page-2" class="btn btn-warning mb-0"><i class="bi bi-arrow-left"></i></a>
+        <a href="#top" class="btn btn-warning mb-0"><i class="bi bi-chevron-double-up"></i></a>
+        <a href="#page-4" class="btn btn-warning mb-0"><i class="bi bi-arrow-right"></i></a>
       </div>
+
     </div>
+  </div>
 </section>
 
-<!-- Box Diary with search -->
-<section class="p-3" id="diary_with_search">
+<!-- Diary with search -->
+<section id="search" class="p-3" id="diary_with_search">
   <div class="container">
     <div class="row text-center g-4">
       <div class="col-md">
@@ -145,66 +172,70 @@ $msg = ($_GET["msg"] ?? "");
           <i class="bi bi-tag me-2"></i> Search Diary
         </h5>
         <div class="card-body">
+          <form method="GET" action="" class="row g-3 align-items-end">
 
-          <div class="col-md-3">
-            <label for="date_from" class="form-label">Date From</label>
-            <input type="date" class="form-control" id="date_from" name="date_from"
-              value="<?= htmlspecialchars($_GET['date_from'] ?? '') ?>">
-          </div>
-          <div class="col-md-3">
-            <label for="date_to" class="form-label">Date To</label>
-            <input type="date" class="form-control" id="date_to" name="date_to"
-              value="<?= htmlspecialchars($_GET['date_to'] ?? '') ?>">
-          </div>
-          <div class="col-md-3">
-            <label for="status" class="form-label">Status</label>
-            <select class="form-select" id="status" name="status">
-              <option value="">-- All --</option>
-              <?php
-              $conn_status = getConn1("ranjith_personal");
-              $status_sql = "SELECT DISTINCT `status` FROM `diary` ORDER BY `status` ASC";
-              $status_result = mysqli_query($conn_status, $status_sql);
-              $selected_status = $_GET['status'] ?? '';
-              while ($srow = mysqli_fetch_assoc($status_result)) {
-                $sel = ($selected_status == $srow['status']) ? 'selected' : '';
-                echo '<option value="' . htmlspecialchars($srow['status']) . '" ' . $sel . '>'
-                  . htmlspecialchars($srow['status']) . '</option>';
-              }
-              ?>
-            </select>
-          </div>
-          <div class="col-md-3">
-            <label for="category" class="form-label">Category</label>
-            <select class="form-select" id="category" name="category">
-              <option value="">-- All --</option>
-              <?php
-              $conn_category = getConn1("ranjith_personal");
-              $category_sql = "SELECT DISTINCT `category` FROM `diary` ORDER BY `category` ASC";
-              $category_result = mysqli_query($conn_category, $category_sql);
-              $selected_category = $_GET['category'] ?? '';
-              while ($srow = mysqli_fetch_assoc($category_result)) {
-                $sel = ($selected_category == $srow['category']) ? 'selected' : '';
-                echo '<option value="' . htmlspecialchars($srow['category']) . '" ' . $sel . '>'
-                  . htmlspecialchars($srow['category']) . '</option>';
-              }
-              ?>
-            </select>
-          </div>
+            <div class="col-md-2">
+              <label for="date_from" class="form-label">Date From</label>
+              <input type="date" class="form-control" id="date_from" name="date_from"
+                value="<?= htmlspecialchars($_GET['date_from'] ?? '') ?>">
+            </div>
 
-          <!-- ✅ NEW: Event search field -->
-          <div class="col-md-3">
-            <label for="event" class="form-label">Event</label>
-            <input type="text" class="form-control" id="event" name="event"
-              placeholder="Search event..."
-              value="<?= htmlspecialchars($_GET['event'] ?? '') ?>">
-          </div>
+            <div class="col-md-2">
+              <label for="date_to" class="form-label">Date To</label>
+              <input type="date" class="form-control" id="date_to" name="date_to"
+                value="<?= htmlspecialchars($_GET['date_to'] ?? '') ?>">
+            </div>
 
-          <div class="col-md-3 d-flex gap-2">
-            <button type="submit" class="btn btn-primary w-100">
-              <i class="bi bi-search"></i> Search
-            </button>
-            <a href="dashboard.php" class="btn btn-outline-dark w-100">Reset</a>
-          </div>
+            <div class="col-md-2">
+              <label for="status" class="form-label">Status</label>
+              <select class="form-select" id="status" name="status">
+                <option value="">-- All --</option>
+                <?php
+                $conn_status = getConn1("ranjith_personal");
+                $status_sql = "SELECT DISTINCT `status` FROM `diary` ORDER BY `status` ASC";
+                $status_result = mysqli_query($conn_status, $status_sql);
+                $selected_status = $_GET['status'] ?? '';
+                while ($srow = mysqli_fetch_assoc($status_result)) {
+                  $sel = ($selected_status == $srow['status']) ? 'selected' : '';
+                  echo '<option value="' . htmlspecialchars($srow['status']) . '" ' . $sel . '>'
+                    . htmlspecialchars($srow['status']) . '</option>';
+                }
+                ?>
+              </select>
+            </div>
+
+            <div class="col-md-2">
+              <label for="category" class="form-label">Category</label>
+              <select class="form-select" id="category" name="category">
+                <option value="">-- All --</option>
+                <?php
+                $conn_category = getConn1("ranjith_personal");
+                $category_sql = "SELECT DISTINCT `category` FROM `diary` ORDER BY `category` ASC";
+                $category_result = mysqli_query($conn_category, $category_sql);
+                $selected_category = $_GET['category'] ?? '';
+                while ($srow = mysqli_fetch_assoc($category_result)) {
+                  $sel = ($selected_category == $srow['category']) ? 'selected' : '';
+                  echo '<option value="' . htmlspecialchars($srow['category']) . '" ' . $sel . '>'
+                    . htmlspecialchars($srow['category']) . '</option>';
+                }
+                ?>
+              </select>
+            </div>
+
+            <div class="col-md-2">
+              <label for="event" class="form-label">Event</label>
+              <input type="text" class="form-control" id="event" name="event"
+                placeholder="Search event..."
+                value="<?= htmlspecialchars($_GET['event'] ?? '') ?>">
+            </div>
+
+            <div class="col-md-2 d-flex gap-2">
+              <button type="submit" class="btn btn-primary w-100">
+                <i class="bi bi-search"></i> Search
+              </button>
+              <a href="dashboard.php" class="btn btn-outline-dark w-100">Reset</a>
+            </div>
+
           </form>
         </div>
       </div>
@@ -296,7 +327,7 @@ $msg = ($_GET["msg"] ?? "");
               <td><?= htmlspecialchars($row["category"]) ?></td>
               <td><?= htmlspecialchars($row["event"]) ?></td>
               <td>
-                <a class="btn btn-success btn-sm me-0" href="admin.php?rec_filter=Manage&id=<?php echo $row["id"] ?>" role="button">Manage</a>
+                <a class="btn btn-success btn-sm me-0" href="admin.php?rec_filter=Manage&id=<?php echo $row["id"] ?>&return_url=<?php echo $cur_pgmname ?>" role="button">Manage</a>
               </td>
             </tr>
           <?php
@@ -305,11 +336,12 @@ $msg = ($_GET["msg"] ?? "");
         </tbody>
       </table>
 
-      <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-        <a href="#top" class="btn btn-warning mb-3">Jump Top</a>
+      <div id="page-1" class="d-grid gap-2 d-md-flex justify-content-md-end">
+        <a href="#top" class="btn btn-warning mb-2"><i class="bi bi-chevron-double-up"></i> Go Top</a>
       </div>
 
     </div>
+  </div>
 </section>
 
 <script>

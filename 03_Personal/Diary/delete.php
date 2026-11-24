@@ -21,6 +21,8 @@ $conn = getConn1("ranjith_personal");
 <?php
 $err = false;
 
+/* parameters */
+$return_url = ($_GET["return_url"] ?? "admin.php");
 $id = ($_GET["id"] ?? "");
 // Disable MySQLi exceptions
 mysqli_report(MYSQLI_REPORT_OFF);
@@ -34,7 +36,7 @@ $result = mysqli_query($conn, $sql);
 
 if ($result) {
   $msg = "Record deleted successfully for id ";
-  header("Location: admin.php?msg_type=danger&msg=" . $msg . urlencode($id));
+  header("Location: <?= $return_url ?>?msg_type=danger&msg=" . $msg . urlencode($id));
 } else {
   // echo "Failed: " . mysqli_error($conn);
   if (!mysqli_query($conn, $sql)) {
@@ -43,5 +45,5 @@ if ($result) {
     $err = true;
   }
   $msg = "Record not deleted,. Error: " . $error_msg;
-  header("Location: admin.php?alert_type=danger&msg=" . urlencode($msg));
+  header("Location: <?= $return_url ?>?alert_type=danger&msg=" . urlencode($msg));
 }

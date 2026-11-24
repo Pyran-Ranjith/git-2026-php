@@ -1,8 +1,11 @@
 <!-- Users/register.php -->
 <?php
 ob_start();  // ← Add this as FIRST line to avoid 
+if (session_status() === PHP_SESSION_NONE) {
+  session_start();
+}
 require_once "header-dashboard.php";
-session_start();
+require_once "include/islogedin.php";
 ?>
 
 <title>Register</title>
@@ -89,7 +92,7 @@ session_start();
           $stmt = mysqli_prepare($conn, "INSERT INTO `users` (`username`, `password_hash`) VALUES (?, ?)");
           mysqli_stmt_bind_param($stmt, "ss", $username, $hash);
           if (mysqli_stmt_execute($stmt)) {
-            $_SESSION['username']   = $username;
+            // $_SESSION['username']   = $username;
             $success = "Account created. You can now <a href='login.php'>log in</a>.";
           } else {
             $error = "Registration failed: " . mysqli_error($conn);

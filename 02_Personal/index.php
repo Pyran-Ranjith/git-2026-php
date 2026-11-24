@@ -1,7 +1,25 @@
 <?php
-include_once 'include/header-1.php';
+// include_once 'include/header-1.php';
+include_once 'include/header.php';
 ?>
-  
+
+<?php
+/* If not logged in, go to login */
+// if (empty($_SESSION['user_id'])) {
+//   // header("Location: " . $base_url_root . "/register.php");
+//   header("Location: Users/login.php");
+//   exit;
+// }
+
+
+/* If already logged in, go to dashboard */
+// if (!empty($_SESSION['user_id'])) {
+//   // header("Location: " . $base_url_root . "/register.php");
+//   header("Location: Users/register.php");
+//   exit;
+// }
+?>
+
 <noscript>
   <!-- Hero Header -->
   <header class="py-4 border-bottom border-secondary border-opacity-10 mb-4">
@@ -26,7 +44,7 @@ include_once 'include/header-1.php';
     </div>
   </header>
 
-<!-- Main Container -->
+  <!-- Main Container -->
   <main class="container mb-5">
     <!-- Stat / KPI Cards -->
     <div class="row g-3 mb-4">

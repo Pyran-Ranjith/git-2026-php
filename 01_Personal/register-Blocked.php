@@ -1,5 +1,6 @@
 <!-- register.php -->
 <?php
+ob_start();  // ← Add this as FIRST line to avoid 
 require_once "header-dashboard.php";
 ?>
 

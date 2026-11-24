@@ -6,14 +6,15 @@ require_once "header-dashboard.php";
   // Add this to avoid error intelephense(P1008)
 /** @var mysqli $conn */
 /** @var String $base_url_root */
+/** @var String $error_msg */
 // /** @var String $base_url_diary */
 ?>
 <?php
-// If already logged in, go to dashboard
-// if (!empty($_SESSION['user_id'])) {
-//   header("Location: " . $base_url_root . "/register.php");
-//   exit;
-// }
+/* If already logged in, go to dashboard */
+if (!empty($_SESSION['user_id'])) {
+  header("Location: " . $base_url_root . "/register.php");
+  exit;
+}
 
 if (!empty($_SESSION['user_id'])) {
     $msg = "userid not found ";

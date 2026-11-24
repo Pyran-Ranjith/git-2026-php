@@ -60,44 +60,46 @@ if ($current_file === 'dashboard.php') {
 
   <!-- Navbar -->
   <!-- <nav class="navbar navbar-expand-lg navbar-dark navbar-custom py-3"> -->
-  <nav class="navbar navbar-expand-lg navbar-green navbar-custom py-3">
-    <div class="container">
-      <a class="navbar-brand" href="dashboard.php">
-        <i class="bi bi-database"></i>
-        <!-- <img src="images/Ranjith_personal-1.png" alt="Ranjith's Personal Logo" width="30" height="30" class="d-inline-block align-text-top me-2"> -->
-        <span>Diary</span>
-      </a>
-      <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain" aria-controls="navbarMain" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-
-      <div class="collapse navbar-collapse" id="navbarMain">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-          <li class="nav-item">
-            <a class="nav-link" href="../index.php">
-              <!-- <i class="bi bi-database me-1"></i> Ranjith's Personal -->
-            <!-- <img src="images/Ranjith_personal-1.png" alt="Ranjith's Personal Logo" width="20" height="20" class="d-inline-block align-text-top me-2"> -->
-            <img src="images/Ranjith_personal-1.png" alt="Ranjith's Personal Logo" width="20" height="20" class="d-inline-block align-text-top me-2">
-              <span>Ranjith's Personal</span>
+  <?php if ($current_file === 'error_page.php') { ?>
+  <?php } else { ?>
+    <nav class="navbar navbar-expand-lg navbar-green navbar-custom py-3">
+      <div class="container">
+        <a class="navbar-brand" href="dashboard.php">
+          <i class="bi bi-database"></i>
+          <!-- <img src="images/Ranjith_personal-1.png" alt="Ranjith's Personal Logo" width="30" height="30" class="d-inline-block align-text-top me-2"> -->
+          <span>Diary</span>
         </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active" href="dashboard.php">
-              <i class="bi bi-grid-1x2-fill me-1"></i> Dashboard
-            </a>
-          </li>
-          <!-- <li class="nav-item">
+        <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain" aria-controls="navbarMain" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarMain">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+            <li class="nav-item">
+              <a class="nav-link" href="../index.php">
+                <!-- <i class="bi bi-database me-1"></i> Ranjith's Personal -->
+                <!-- <img src="images/Ranjith_personal-1.png" alt="Ranjith's Personal Logo" width="20" height="20" class="d-inline-block align-text-top me-2"> -->
+                <img src="images/Ranjith_personal-1.png" alt="Ranjith's Personal Logo" width="20" height="20" class="d-inline-block align-text-top me-2">
+                <span>Ranjith's Personal</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="dashboard.php">
+                <i class="bi bi-grid-1x2-fill me-1"></i> Dashboard
+              </a>
+            </li>
+            <!-- <li class="nav-item">
             <a class="nav-link" href="Diary/dashboard.php">
               <i class="bi bi-collection-fill me-1"></i> Diary
             </a>
           </li> -->
-          <!-- <li class="nav-item">
+            <!-- <li class="nav-item">
             <a class="nav-link" href="add-product.php">
               <i class="bi bi-plus-circle-fill me-1"></i> Add Fragrance
             </a>
           </li> -->
-        </ul>
-        <!-- <div class="d-flex align-items-center gap-2">
+          </ul>
+          <!-- <div class="d-flex align-items-center gap-2">
           <a href="products.php" class="btn btn-outline-gold btn-sm px-3">
             <i class="bi bi-table me-1"></i> Manage Catalog
           </a>
@@ -105,6 +107,7 @@ if ($current_file === 'dashboard.php') {
             <i class="bi bi-plus-lg me-1"></i> New Fragrance
           </a>
         </div> -->
+        </div>
       </div>
-    </div>
-  </nav>
+    </nav>
+  <?php } ?>

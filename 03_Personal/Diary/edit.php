@@ -4,6 +4,13 @@ ob_start();  // ← Add this as FIRST line to avoid
 require_once "../config_db.php";
 require_once "include/header.php";
 // session_start();
+
+/* others */
+$cur_pgmname = basename($_SERVER['SCRIPT_NAME']);
+/* parameters */
+$return_url = ($_GET["return_url"] ?? "admin.php");
+$id = ($_GET["id"] ?? "");
+
 $conn = getConn1("ranjith_personal");
 ?>
 
@@ -28,7 +35,6 @@ if (!isset($base_url_diary)) {
 
 $err = false;
 
-$id = ($_GET["id"] ?? "");
 $sql = "SELECT * FROM `diary` WHERE id = $id LIMIT 1";
 $result = mysqli_query($conn, $sql);
 if ($result) {
@@ -40,7 +46,7 @@ if ($result) {
     $err = true;
   }
   $msg = "Record not updated,. Error: " . $error_msg;
-  header("Location: admin.php?alert_type=danger&msg=" . urlencode($msg));
+  header("Location: <?= $return_url ?>?alert_type=danger&msg=" . urlencode($msg));
   exit;
 }
 
@@ -58,12 +64,19 @@ if (isset($_POST["submit"])) {
   $status = $_POST['status'];
   $category = $_POST['category'];
 
+  // $return_url  ?? "admin.php";
   $sql = "UPDATE `diary` SET `date`='$date', `status`='$status', `category`='$category', `event`='$event' WHERE id = $id";
   $result = mysqli_query($conn, $sql);
   if ($result) {
     $msg = "Record updated successfully for ";
-    header("Location: " . $base_url_diary . "/admin.php?alert_type=success&msg=" . $msg . urlencode($date) . " " . urlencode($event));
-    exit;
+    // header("Location: " . $base_url_diary . "/" . $return_url?alert_type=success&msg=" . $msg . urlencode($date) . " " . urlencode($event));
+    $query = http_build_query([
+      'alert_type' => 'success',
+      'msg'        => $msg . ' ' . $date . ' ' . $event,
+    ]);
+
+    header("Location: " . $base_url_diary . "/" . $return_url . "?" . $query);
+    exit();
   } else {
     if (!mysqli_query($conn, $sql)) {
       $error_no = mysqli_errno($conn);
@@ -71,7 +84,7 @@ if (isset($_POST["submit"])) {
       $err = true;
     }
     $msg = "Record not updated,. Error: " . $error_msg;
-    header("Location: admin.php?alert_type=danger&msg=" . urlencode($msg));
+    header("Location: <?= $return_url ?>?alert_type=danger&msg=" . urlencode($msg));
     exit;
   }
 }
@@ -119,7 +132,7 @@ if (isset($_POST["submit"])) {
   <div class="contaner d-flex justify-content-center">
     <form action="" method="post" style="width: 50vw; min-width: 300px">
       <div class="row mb-3">
-                <!-- <td><?= $row["id"] ?></td>
+        <!-- <td><?= $row["id"] ?></td>
                 <td><?= $row["date"] ?></td>
                 <td><?= $row["status"] ?></td>
                 <td><?= $row["category"] ?></td>
@@ -133,12 +146,12 @@ if (isset($_POST["submit"])) {
         <div class="form-group mb-3">
           <label class="form-label">Status:</label>
           <div class="form-check">
-            <input class="form-check-input" type="radio" name="status" id="info" value="info" checked
+            <input class="form-check-input" type="radio" name="status" id="info" value="info"
               <?= ($row['status'] == 'info') ? 'checked' : '' ?> />
             <label class="form-check-label" for="info"> Info </label>
           </div>
           <div class="form-check">
-            <input class="form-check-input" type="radio" name="status" id="pending" value="pending" 
+            <input class="form-check-input" type="radio" name="status" id="pending" value="pending"
               <?= ($row['status'] == 'pending') ? 'checked' : '' ?> />
             <label class="form-check-label" for="pending"> Pending </label>
           </div>
@@ -153,17 +166,17 @@ if (isset($_POST["submit"])) {
           <label class="form-label">Category:</label>
           <div class="form-check">
             <input class="form-check-input" type="radio" name="category" id="info" value="info" checked
-              <?= ($row['status'] == 'info') ? 'checked' : '' ?> />
+              <?= ($row['category'] == 'info') ? 'checked' : '' ?> />
             <label class="form-check-label" for="info"> Info </label>
           </div>
           <div class="form-check">
-            <input class="form-check-input" type="radio" name="category" id="login" value="login" 
-              <?= ($row['status'] == 'login') ? 'checked' : '' ?> />
+            <input class="form-check-input" type="radio" name="category" id="login" value="login"
+              <?= ($row['category'] == 'login') ? 'checked' : '' ?> />
             <label class="form-check-label" for="login"> Login </label>
           </div>
           <div class="form-check">
             <input class="form-check-input" type="radio" name="category" id="helth" value="helth"
-              <?= ($row['status'] == 'helth') ? 'checked' : '' ?> />
+              <?= ($row['category'] == 'helth') ? 'checked' : '' ?> />
             <label class="form-check-label" for="helth"> Helth </label>
           </div>
           <div class="form-check">
@@ -202,7 +215,7 @@ if (isset($_POST["submit"])) {
             <label class="form-check-label" for="genaral"> Genaral </label>
           </div>
         </div>
-        
+
         <div class="col">
 
           <label class="form-label">Event:</label>
@@ -214,7 +227,7 @@ if (isset($_POST["submit"])) {
         <button type="submit" class="btn btn-success" name="submit">
           Save
         </button>
-        <a href="<?= $base_url_diary ?>/admin.php" class="btn btn-primary">Cancel</a>
+        <a href="<?= $base_url_diary ?>/<?= $return_url ?>" class="btn btn-primary">Cancel</a>
       </div>
 
   </div>

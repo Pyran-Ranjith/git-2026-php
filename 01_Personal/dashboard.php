@@ -1,6 +1,7 @@
 <!-- dashboard.php -->
 <?php
 require_once "header-dashboard.php";
+require_once 'Users/include/auth.php';
 global $conn;
 // global $setvername1;
 ?>
@@ -9,6 +10,26 @@ global $conn;
 </head>
 
 <body>
+
+  <?php
+  // echo "<br><br><br>";
+  // echo "userid: " . htmlspecialchars($_SESSION['user_id']);
+  /* If not logged in, go to login */
+  if (empty($_SESSION['user_id'])) {
+    // header("Location: " . $base_url_root . "/register.php");
+    header("Location: Users/login.php");
+    exit;
+  }
+
+
+  /* If already logged in, go to dashboard */
+  // if (!empty($_SESSION['user_id'])) {
+  //   // header("Location: " . $base_url_root . "/register.php");
+  //   header("Location: Users/register.php");
+  //   exit;
+  // }
+  ?>
+
   <?php
   $msg_type = ($_GET["msg_type"] ?? "");
   $msg = ($_GET["msg"] ?? "");
@@ -27,6 +48,7 @@ global $conn;
       </div>
     </div>
   <?php } ?>
+
 
   <noscript>
     <!-- Boxes -->

@@ -119,8 +119,11 @@
                   <li><a class="dropdown-item diary-green" href="<?= $base_url_users_antigravity ?>/index.php">Users-antigravity</a></li>
                   <li><a class="dropdown-item diary-green" href="<?= $base_url_perfume_antigravity ?>/index.php">Perfume-antigravity</a></li>
                   <li><a class="dropdown-item diary-green" href="<?= $base_url_users ?>/dashboard.php">Users</a></li>
-                  <li><a class="dropdown-item diary-green" href="<?= $base_url_users ?>/register.php">User-Register</a></li>
-                  <li><a class="dropdown-item diary-green" href="<?= $base_url_users ?>/login.php">User-Login</a></li>
+
+                  <li><a class="dropdown-item diary-green" href="<?= $base_url_users ?>/register.php">Register</a></li>
+                  <li><a class="dropdown-item diary-green" href="<?= $base_url_users ?>/login.php">Login</a></li>
+                  <li><a class="dropdown-item diary-green" href="logout.php">Logout</a></li>
+
                   <!-- <li><a class="dropdown-item diary-green" href="dashboard.php">Diary</a></li> -->
 
                   <!-- <li><a class="dropdown-item" href="#">Another action</a></li>
@@ -136,6 +139,12 @@
                   <li><a class="dropdown-item" href="#">Separated link</a></li> -->
 
                 </ul>
+
+                <!-- <ul class="dropdown-menu">
+                  <li><a class="dropdown-item diary-green" href="<?= $base_url_users ?>/register.php">Register</a></li>
+                  <li><a class="dropdown-item diary-green" href="<?= $base_url_users ?>/login.php">Login</a></li>
+                  <li><a class="dropdown-item diary-green" href="logout.php">Logout</a></li>
+                </ul> -->
 
               </li>
 
